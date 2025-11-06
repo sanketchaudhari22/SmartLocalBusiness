@@ -1,49 +1,36 @@
-*🚀 SmartLocalBusiness* – Microservices Based Backend (ASP.NET Core + Ocelot + Swagger)
-🧠 Overview
+🧠 SmartLocalBusiness – Microservices-Based Platform
 
-SmartLocalBusiness is a Microservices-based Backend built with .NET Core, designed to manage local businesses, users, bookings, reviews, and search features in a distributed system.
-It uses Ocelot API Gateway for routing requests between services and Swagger for documentation.
+🚀 Overview
 
-🏗️ Architecture
+SmartLocalBusiness is a full-stack, microservices-based system built using .NET Core, Entity Framework, and Ocelot API Gateway.
+The platform connects local businesses, users, and services with features like booking, reviews, and intelligent search.
 
-🧩 Microservices Architecture
-Each domain (User, Business, Booking, Search, Review) is a separate service
+🏗️ Project Architecture
 
-Each service has its own database connection, controllers, and DTOs
+The system follows a microservices architecture, where each module runs independently and communicates via the Ocelot API Gateway.
 
-Requests flow through the API Gateway (Ocelot)
-
+🧩 Services Included:
+Service Name	Description	Port
+🧍‍♂️ User Service	Handles user registration, login, and authentication (JWT)	5000
+🏢 Business Service	Manages business listings, categories, and details	5001
+📅 Booking Service	Handles booking creation, status, and cancellations	5002
+🔍 Search Service	Performs advanced & nearby business search	5003
+⭐ Review Service	Handles business reviews and ratings	5004
+🚪 API Gateway	Routes and aggregates all service requests	5005
 ⚙️ Tech Stack
-Category	Technologies
-Backend Framework	ASP.NET Core 9.0
-API Gateway	Ocelot
-Database	MS SQL Server
-ORM	Entity Framework Core
-Design Pattern	Clean Architecture + Repository Pattern
-API Docs	Swagger (Swashbuckle)
-Communication	HTTP REST APIs
-Language	C#
 
-📁 Folder Structure
-SmartLocalBusiness/
-│
-├── src/
-│   ├── ApiGateway/              # Ocelot Gateway + Swagger aggregation
-│   ├── Services/
-│   │   ├── UserService/         # User registration, login, profile
-│   │   ├── BusinessService/     # Business management
-│   │   ├── BookingService/      # Booking creation & status updates
-│   │   ├── SearchService/       # Business search & nearby logic
-│   │   ├── ReviewService/       # Reviews, ratings
-│   └── Shared/                  # DTOs, Responses, Common Models
-│
-└── SmartLocalBusiness.sln       # Solution file
+Backend:
 
-🧩 Microservices and Ports
-Service	Description	Port
-🧍 UserService	Handles user registration, login, profile	5000
-🏢 BusinessService	Manages business info and categories	5001
-📅 BookingService	Booking creation, updates, cancellation	5002
-🔍 SearchService	Search and nearby business logic	5003
-⭐ ReviewService	Add, update, delete and view reviews	5004
-🌐 API Gateway	Central entry point using Ocelot	5005
+ASP.NET Core 9.0 Web API
+
+Entity Framework Core
+
+MS SQL Server
+
+AutoMapper
+
+Repository Pattern + DTOs
+
+Ocelot API Gateway
+
+Swagger for API Documentation
