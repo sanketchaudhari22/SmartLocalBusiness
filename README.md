@@ -1,4 +1,4 @@
-🚀 SmartLocalBusiness – Microservices Based Backend (ASP.NET Core + Ocelot + Swagger)
+*🚀 SmartLocalBusiness* – Microservices Based Backend (ASP.NET Core + Ocelot + Swagger)
 🧠 Overview
 
 SmartLocalBusiness is a Microservices-based Backend built with .NET Core, designed to manage local businesses, users, bookings, reviews, and search features in a distributed system.
