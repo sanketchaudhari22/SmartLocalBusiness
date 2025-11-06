@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kYU/VNtFy9c=",
+  "dgSpecHash": "wsrmmb4qfKc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SANKET\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
@@ -17,8 +17,8 @@
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\9.0.10\\microsoft.entityframeworkcore.sqlserver.9.0.10.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.10\\microsoft.extensions.caching.abstractions.9.0.10.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.10\\microsoft.extensions.caching.memory.9.0.10.nupkg.sha512",
-    "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\9.0.10\\microsoft.extensions.caching.stackexchangeredis.9.0.10.nupkg.sha512",
-    "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.10\\microsoft.extensions.configuration.9.0.10.nupkg.sha512",
+    "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\9.0.0\\microsoft.extensions.caching.stackexchangeredis.9.0.0.nupkg.sha512",
+    "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.0\\microsoft.extensions.configuration.9.0.0.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.10\\microsoft.extensions.configuration.abstractions.9.0.10.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.10\\microsoft.extensions.dependencyinjection.9.0.10.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.10\\microsoft.extensions.dependencyinjection.abstractions.9.0.10.nupkg.sha512",

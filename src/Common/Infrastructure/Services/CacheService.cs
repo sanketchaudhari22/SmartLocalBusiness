@@ -1,13 +1,11 @@
 using Microsoft.Extensions.Caching.Distributed;
-using System;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SmartLocalBusiness.Infrastructure.Services
 {
     public interface ICacheService
     {
-        Task<T> GetAsync<T>(string key);
+        Task<T?> GetAsync<T>(string key);
         Task SetAsync<T>(string key, T value, TimeSpan? expiration = null);
         Task RemoveAsync(string key);
     }
@@ -21,10 +19,12 @@ namespace SmartLocalBusiness.Infrastructure.Services
             _cache = cache;
         }
 
-        public async Task<T> GetAsync<T>(string key)
+        public async Task<T?> GetAsync<T>(string key)
         {
             var value = await _cache.GetStringAsync(key);
-            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+            return string.IsNullOrEmpty(value)
+                ? default
+                : JsonSerializer.Deserialize<T>(value);
         }
 
         public async Task SetAsync<T>(string key, T value, TimeSpan? expiration = null)
@@ -34,8 +34,8 @@ namespace SmartLocalBusiness.Infrastructure.Services
                 AbsoluteExpirationRelativeToNow = expiration ?? TimeSpan.FromHours(1)
             };
 
-            var jsonValue = JsonSerializer.Serialize(value);
-            await _cache.SetStringAsync(key, jsonValue, options);
+            var json = JsonSerializer.Serialize(value);
+            await _cache.SetStringAsync(key, json, options);
         }
 
         public async Task RemoveAsync(string key)

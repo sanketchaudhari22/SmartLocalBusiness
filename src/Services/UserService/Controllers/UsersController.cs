@@ -1,10 +1,10 @@
-using SmartLocalBusiness.UserService.Services;
-using SmartLocalBusiness.Shared.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using SmartLocalBusiness.Shared.DTOs;
 using SmartLocalBusiness.Shared.Responses;
+using SmartLocalBusiness.UserService.Services;
 
-
-
+namespace SmartLocalBusiness.UserService.Controllers
+{
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -72,3 +72,4 @@ using SmartLocalBusiness.Shared.Responses;
             }
         }
     }
+}

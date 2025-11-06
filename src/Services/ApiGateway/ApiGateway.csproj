@@ -8,13 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
-    <PackageReference Include="Ocelot" Version="24.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\Shared\Shared.csproj" />
+    <PackageReference Include="MMLib.SwaggerForOcelot" Version="7.0.2" />
+    <PackageReference Include="Ocelot" Version="23.3.3" />
   </ItemGroup>
 
 </Project>

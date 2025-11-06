@@ -316,12 +316,12 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "Microsoft.Extensions.Caching.StackExchangeRedis/9.0.10": {
+      "Microsoft.Extensions.Caching.StackExchangeRedis/9.0.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Caching.Abstractions": "9.0.10",
-          "Microsoft.Extensions.Logging.Abstractions": "9.0.10",
-          "Microsoft.Extensions.Options": "9.0.10",
+          "Microsoft.Extensions.Caching.Abstractions": "9.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
+          "Microsoft.Extensions.Options": "9.0.0",
           "StackExchange.Redis": "2.7.27"
         },
         "compile": {
@@ -1195,6 +1195,9 @@
       "Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "Shared": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Domain.dll": {}
         },
@@ -1209,8 +1212,9 @@
           "Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.10",
-          "Microsoft.Extensions.Caching.StackExchangeRedis": "9.0.10",
-          "Microsoft.Extensions.Configuration": "9.0.10"
+          "Microsoft.Extensions.Caching.StackExchangeRedis": "9.0.0",
+          "Microsoft.Extensions.Configuration": "9.0.0",
+          "Shared": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Infrastructure.dll": {}
@@ -1222,10 +1226,6 @@
       "Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
-        "dependencies": {
-          "Domain": "1.0.0",
-          "Infrastructure": "1.0.0"
-        },
         "compile": {
           "bin/placeholder/Shared.dll": {}
         },
@@ -1834,10 +1834,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Caching.StackExchangeRedis/9.0.10": {
-      "sha512": "JpkKHx2DFGLFvWblkIMk02SvhRkijnQyrGhbfV/lhxN/xYYLRQhwvchxNK4bbEGBm3VOYRlPkt8LispTNcUVcg==",
+    "Microsoft.Extensions.Caching.StackExchangeRedis/9.0.0": {
+      "sha512": "sxxJa+S6++s+J7tipY1DjdhAIO279hAOItCMKnpeEOXrU4SNqcjKNjemssgSJ1uMN5rgbuv52CzMf7UWnLYgiw==",
       "type": "package",
-      "path": "microsoft.extensions.caching.stackexchangeredis/9.0.10",
+      "path": "microsoft.extensions.caching.stackexchangeredis/9.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1851,7 +1851,7 @@
         "lib/net9.0/Microsoft.Extensions.Caching.StackExchangeRedis.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Caching.StackExchangeRedis.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Caching.StackExchangeRedis.xml",
-        "microsoft.extensions.caching.stackexchangeredis.9.0.10.nupkg.sha512",
+        "microsoft.extensions.caching.stackexchangeredis.9.0.0.nupkg.sha512",
         "microsoft.extensions.caching.stackexchangeredis.nuspec"
       ]
     },
@@ -3316,11 +3316,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Services\\UserService\\UserService.csproj",
+      "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\UserService\\UserService.csproj",
       "projectName": "UserService",
-      "projectPath": "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Services\\UserService\\UserService.csproj",
+      "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\UserService\\UserService.csproj",
       "packagesPath": "C:\\Users\\SANKET\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Services\\UserService\\obj\\",
+      "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\UserService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3341,14 +3341,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj"
+            "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj"
+            "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj"
             },
-            "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj": {
-              "projectPath": "C:\\Users\\SANKET\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj"
+            "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj": {
+              "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj"
             }
           }
         }
