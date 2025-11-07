@@ -6,31 +6,40 @@ using BusinessService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers
+// -------------------- CONTROLLERS --------------------
 builder.Services.AddControllers();
 
-// Database
+// -------------------- DATABASE --------------------
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Redis
+// -------------------- REDIS --------------------
 builder.Services.AddStackExchangeRedisCache(opt =>
 {
     opt.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
 });
 
-// DI
+// -------------------- DEPENDENCY INJECTION --------------------
 builder.Services.AddScoped<ICacheService, RedisCacheService>();
 builder.Services.AddScoped<IBusinessService, BusinessService.Services.BusinessService>();
 
-// CORS
-builder.Services.AddCors(opt =>
+// -------------------- ✅ CORS CONFIG --------------------
+builder.Services.AddCors(options =>
 {
-    opt.AddPolicy("AllowAll", b =>
-        b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5173",  // React Frontend
+                "http://localhost:5005"   // API Gateway
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
 });
 
-// Swagger
+// -------------------- SWAGGER --------------------
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -42,8 +51,10 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// -------------------- BUILD APP --------------------
 var app = builder.Build();
 
+// -------------------- SWAGGER UI --------------------
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -54,8 +65,18 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+// -------------------- PIPELINE --------------------
+
+// ❌ Remove HTTPS redirection for local setup
+// app.UseHttpsRedirection();
+
+// ✅ Enable CORS globally (before controller mapping)
+app.UseCors("AllowFrontend");
+
 app.UseAuthorization();
+
+// ✅ Map Controllers (API endpoints)
 app.MapControllers();
+
+// ✅ Run Application
 app.Run();

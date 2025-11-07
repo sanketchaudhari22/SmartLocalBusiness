@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------
+   Fonts (Light + Semi-Bold + Playfair headings)
+--------------------------------------------------- */
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/playfair-display/600.css";
+
+/* ---------------------------------------------------
+   Global Styles
+--------------------------------------------------- */
+body {
+  @apply bg-background text-text font-sans antialiased;
+}
+
+/* Optional — for smoother UI feel */
+h1, h2, h3, h4, h5 {
+  @apply font-['Playfair_Display'] text-primary-800;
+}
+
+button {
+  @apply transition-all duration-200;
+}

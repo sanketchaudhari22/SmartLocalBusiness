@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "JDBUAVvBYig=",
+  "dgSpecHash": "TsyI6DxOd4o=",
   "success": true,
   "projectFilePath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\ApiGateway\\ApiGateway.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,7 @@
     "C:\\Users\\SANKET\\.nuget\\packages\\fluentvalidation\\11.8.0\\fluentvalidation.11.8.0.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\ipaddressrange\\6.0.0\\ipaddressrange.6.0.0.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\kros.utils\\2.1.0\\kros.utils.2.1.0.nupkg.sha512",
-    "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.10\\microsoft.aspnetcore.authentication.jwtbearer.9.0.10.nupkg.sha512",
+    "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.0\\microsoft.aspnetcore.authentication.jwtbearer.9.0.0.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\8.0.0\\microsoft.aspnetcore.jsonpatch.8.0.0.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.aspnetcore.middlewareanalysis\\8.0.0\\microsoft.aspnetcore.middlewareanalysis.8.0.0.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\8.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.8.0.0.nupkg.sha512",
@@ -113,18 +113,5 @@
     "C:\\Users\\SANKET\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\SANKET\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "message": "ApiGateway depends on MMLib.SwaggerForOcelot (>= 7.0.2) but MMLib.SwaggerForOcelot 7.0.2 was not found. MMLib.SwaggerForOcelot 8.0.0 was resolved instead.",
-      "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\ApiGateway\\ApiGateway.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\ApiGateway\\ApiGateway.csproj",
-      "libraryId": "MMLib.SwaggerForOcelot",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  "logs": []
 }

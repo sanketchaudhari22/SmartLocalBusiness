@@ -90,7 +90,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Authentication.JwtBearer/9.0.10": {
+      "Microsoft.AspNetCore.Authentication.JwtBearer/9.0.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "8.0.1"
@@ -1960,10 +1960,10 @@
         "lib/netstandard2.0/Kros.Utils.xml"
       ]
     },
-    "Microsoft.AspNetCore.Authentication.JwtBearer/9.0.10": {
-      "sha512": "lf82sEH4eETi8DBfV7UIkAYPKJuU9OT0Xpw7OcWC5dHWNZYnxVqhT6jM3Y1Hz3yXhbhTRTmcz4U/+VfcZCBkSA==",
+    "Microsoft.AspNetCore.Authentication.JwtBearer/9.0.0": {
+      "sha512": "bs+1Pq3vQdS2lTyxNUd9fEhtMsq3eLUpK36k2t56iDMVrk6OrAoFtvrQrTK0Y0OetTcJrUkGU7hBlf+ORzHLqQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.authentication.jwtbearer/9.0.10",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/9.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1972,7 +1972,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll",
         "lib/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.xml",
-        "microsoft.aspnetcore.authentication.jwtbearer.9.0.10.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.jwtbearer.9.0.0.nupkg.sha512",
         "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
       ]
     },
@@ -5592,8 +5592,8 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "MMLib.SwaggerForOcelot >= 7.0.2",
-      "Microsoft.AspNetCore.Authentication.JwtBearer >= 9.0.10",
+      "MMLib.SwaggerForOcelot >= 8.0.0",
+      "Microsoft.AspNetCore.Authentication.JwtBearer >= 9.0.0",
       "Ocelot >= 23.3.3"
     ]
   },
@@ -5649,11 +5649,11 @@
         "dependencies": {
           "MMLib.SwaggerForOcelot": {
             "target": "Package",
-            "version": "[7.0.2, )"
+            "version": "[8.0.0, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
-            "version": "[9.0.10, )"
+            "version": "[9.0.0, )"
           },
           "Ocelot": {
             "target": "Package",
@@ -5682,17 +5682,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "ApiGateway depends on MMLib.SwaggerForOcelot (>= 7.0.2) but MMLib.SwaggerForOcelot 7.0.2 was not found. MMLib.SwaggerForOcelot 8.0.0 was resolved instead.",
-      "libraryId": "MMLib.SwaggerForOcelot",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  }
 }

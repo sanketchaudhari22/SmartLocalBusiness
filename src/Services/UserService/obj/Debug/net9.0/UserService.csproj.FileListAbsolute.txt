@@ -17,6 +17,7 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\bin\Debug\ne
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\bin\Debug\net9.0\UserService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\bin\Debug\net9.0\Azure.Core.dll
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\bin\Debug\net9.0\Azure.Identity.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\bin\Debug\net9.0\BCrypt.Net-Next.dll
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll

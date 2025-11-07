@@ -60,8 +60,6 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\bin\Debug\net
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.csproj.AssemblyReference.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\obj\Debug\net9.0\rpswa.dswa.cache.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.AssemblyInfoInputs.cache
-C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.AssemblyInfo.cs
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.csproj.CoreCompileInputs.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.MvcApplicationPartsAssemblyInfo.cache

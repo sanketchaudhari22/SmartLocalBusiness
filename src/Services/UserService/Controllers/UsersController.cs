@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartLocalBusiness.Shared.DTOs;
-using SmartLocalBusiness.Shared.Responses;
 using SmartLocalBusiness.UserService.Services;
 
 namespace SmartLocalBusiness.UserService.Controllers
@@ -19,57 +18,29 @@ namespace SmartLocalBusiness.UserService.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
         {
-            try
-            {
-                var user = await _userService.RegisterAsync(dto);
-                return Ok(ApiResponse<UserDto>.SuccessResponse(user, "User registered successfully"));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<UserDto>.ErrorResponse(ex.Message));
-            }
+            var result = await _userService.RegisterAsync(dto);
+            return Ok(new { success = true, data = result });
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            try
-            {
-                var token = await _userService.LoginAsync(dto);
-                return Ok(ApiResponse<string>.SuccessResponse(token, "Login successful"));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<string>.ErrorResponse(ex.Message));
-            }
+            var token = await _userService.LoginAsync(dto);
+            return Ok(new { success = true, data = token });
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
-            try
-            {
-                var user = await _userService.GetUserByIdAsync(id);
-                return Ok(ApiResponse<UserDto>.SuccessResponse(user));
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ApiResponse<UserDto>.ErrorResponse(ex.Message));
-            }
+            var user = await _userService.GetUserByIdAsync(id);
+            return Ok(user);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] UserDto dto)
         {
-            try
-            {
-                var user = await _userService.UpdateUserAsync(id, dto);
-                return Ok(ApiResponse<UserDto>.SuccessResponse(user, "User updated successfully"));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<UserDto>.ErrorResponse(ex.Message));
-            }
+            var result = await _userService.UpdateUserAsync(id, dto);
+            return Ok(result);
         }
     }
 }

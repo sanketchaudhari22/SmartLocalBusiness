@@ -5,7 +5,7 @@ using SmartLocalBusiness.Shared.DTOs;
 namespace SmartLocalBusiness.BookingService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/booking")] 
     public class BookingController : ControllerBase
     {
         private readonly IBookingService _bookingService;

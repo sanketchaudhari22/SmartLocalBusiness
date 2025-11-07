@@ -6,14 +6,33 @@ using SmartLocalBusiness.BookingService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// DB
+// -------------------- CONTROLLERS --------------------
+builder.Services.AddControllers();
+
+// -------------------- DATABASE --------------------
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// DI
+// -------------------- DEPENDENCY INJECTION --------------------
 builder.Services.AddScoped<IBookingService, BookingService>();
 
-// Swagger
+// -------------------- ✅ CORS CONFIG --------------------
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5173",  // React frontend
+                "http://localhost:5005"   // API Gateway
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
+// -------------------- SWAGGER --------------------
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -25,17 +44,10 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// CORS
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("AllowAll", b =>
-        b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-});
-
-builder.Services.AddControllers();
-
+// -------------------- BUILD APP --------------------
 var app = builder.Build();
 
+// -------------------- SWAGGER UI --------------------
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -46,8 +58,19 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseCors("AllowAll");
-app.UseHttpsRedirection();
+// -------------------- PIPELINE --------------------
+
+// ❌ Remove HTTPS redirection for local dev (React call issue avoid)
+ // app.UseHttpsRedirection();
+
+// ✅ Enable CORS globally
+app.UseCors("AllowFrontend");
+
+// ✅ Auth (if required later)
 app.UseAuthorization();
+
+// ✅ Map Controllers
 app.MapControllers();
+
+// ✅ Run the Application
 app.Run();

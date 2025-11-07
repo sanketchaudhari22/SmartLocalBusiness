@@ -6,12 +6,13 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load ocelot config
+// ---------------- CONFIG ----------------
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 
-// Add Controllers + Swagger
+// ---------------- SWAGGER + CONTROLLERS ----------------
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 builder.Services.AddSwaggerGen(c =>
 {
@@ -23,12 +24,25 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Add Ocelot
+// ---------------- OCELOT ----------------
 builder.Services.AddOcelot(builder.Configuration);
+
+// ---------------- ✅ CORS for React Frontend ----------------
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")  // React frontend
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
-// Middleware pipeline
+// ---------------- SWAGGER UI ----------------
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -37,7 +51,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerForOcelotUI(options =>
     {
         options.PathToSwaggerGenerator = "/swagger/docs";
-        // 👇 Removed RoutePrefix + ReConfigureUpstreamSwaggerJson (no longer needed)
     });
 }
 else
@@ -48,10 +61,33 @@ else
     });
 }
 
-// ✅ Always run Ocelot at end
+// ---------------- ⚡ IMPORTANT FIXES ----------------
+
+// ❌ Turn OFF HTTPS redirection (to avoid localhost mismatch)
+//// app.UseHttpsRedirection();
+
+// ✅ Enable CORS before Ocelot
+app.UseCors("AllowReactApp");
+
+// ✅ Handle CORS preflight (OPTIONS requests)
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = 200;
+        await context.Response.CompleteAsync();
+    }
+    else
+    {
+        await next();
+    }
+});
+
+// ✅ Ocelot must run last
 await app.UseOcelot();
 
-app.UseHttpsRedirection();
+// Authorization (optional for internal APIs)
 app.UseAuthorization();
 app.MapControllers();
+
 app.Run();
