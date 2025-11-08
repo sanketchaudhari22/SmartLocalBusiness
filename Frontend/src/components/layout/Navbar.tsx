@@ -1,95 +1,83 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Menu, X, Sparkles } from "lucide-react";
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
+  const navLinks = [
+    { label: "🏠 Home", path: "/" },
+    { label: "🏢 Businesses", path: "/businesses" },
+    { label: "🔍 Search", path: "/search" },
+    { label: "📅 Dashboard", path: "/dashboard" },
+    { label: "🛎️ Booking", path: "/booking/create" },
+  ];
+
   return (
-    <nav className="bg-surface border-b border-border shadow-soft sticky top-0 z-50">
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#667eea] via-[#6b63ce] to-[#764ba2] shadow-lg text-white backdrop-blur-xl transition-all duration-500">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <div
           onClick={() => navigate("/")}
-          className="text-2xl font-semibold text-primary-700 cursor-pointer hover:text-primary-800 transition-all"
+          className="text-2xl font-extrabold cursor-pointer flex items-center gap-2 hover:opacity-90 transition-all"
         >
-          Smart<span className="text-accent">Finder</span>
+          <Sparkles className="text-yellow-300 animate-pulse w-6 h-6" />
+          <span>Smart</span>
+          <span className="text-yellow-300">Finder</span>
         </div>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8 font-medium text-text">
-          <Link
-            to="/"
-            className="hover:text-primary-600 transition-all duration-200"
-          >
-            Home
-          </Link>
-          <Link
-            to="/businesses"
-            className="hover:text-primary-600 transition-all duration-200"
-          >
-            Businesses
-          </Link>
-          <Link
-            to="/search"
-            className="hover:text-primary-600 transition-all duration-200"
-          >
-            Search
-          </Link>
-          <Link
-            to="/dashboard"
-            className="hover:text-primary-600 transition-all duration-200"
-          >
-            Dashboard
-          </Link>
+        <div className="hidden md:flex items-center gap-8 font-semibold">
+          {navLinks.map(({ label, path }) => (
+            <Link
+              key={label}
+              to={path}
+              className="hover:text-yellow-300 transition duration-300"
+            >
+              {label}
+            </Link>
+          ))}
         </div>
 
-        {/* Right side buttons */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Buttons */}
+        <div className="hidden md:flex items-center gap-3">
           <Link
             to="/login"
-            className="border border-primary-500 text-primary-600 px-4 py-2 rounded-lg hover:bg-primary-50 transition-all"
+            className="bg-white text-[#667eea] font-semibold px-5 py-2 rounded-xl shadow hover:bg-gray-100 transition"
           >
             Login
           </Link>
           <Link
             to="/register"
-            className="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-all"
+            className="bg-yellow-400 text-[#333] font-semibold px-5 py-2 rounded-xl shadow hover:bg-yellow-500 transition"
           >
             Sign Up
           </Link>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile Button */}
         <button
-          className="md:hidden text-primary-600 text-2xl"
+          className="md:hidden text-white text-3xl"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          ☰
+          {menuOpen ? <X /> : <Menu />}
         </button>
       </div>
 
-      {/* Mobile dropdown */}
+      {/* Mobile Dropdown */}
       {menuOpen && (
-        <div className="md:hidden bg-surface border-t border-border px-6 py-4 space-y-4 text-text">
-          {["Home", "Businesses", "Search", "Dashboard", "Login", "Sign Up"].map(
-            (label) => (
-              <Link
-                key={label}
-                to={
-                  label === "Home"
-                    ? "/"
-                    : label === "Sign Up"
-                    ? "/register"
-                    : `/${label.toLowerCase()}`
-                }
-                onClick={() => setMenuOpen(false)}
-                className="block hover:text-primary-600 transition-all"
-              >
-                {label}
-              </Link>
-            )
-          )}
+        <div className="md:hidden bg-[#6b63ce] border-t border-purple-400 px-6 py-5 space-y-4 animate-slideDown">
+          {[...navLinks, { label: "Login", path: "/login" }, { label: "Sign Up", path: "/register" }].map(({ label, path }) => (
+            <Link
+              key={label}
+              to={path}
+              onClick={() => setMenuOpen(false)}
+              className="block text-lg font-medium hover:text-yellow-300 transition"
+            >
+              {label}
+            </Link>
+          ))}
         </div>
       )}
     </nav>

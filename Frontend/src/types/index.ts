@@ -29,6 +29,7 @@ export interface Business {
   categoryName: string;
   createdAt: string;
   updatedAt: string;
+    imageUrl?: string;
 }
 
 export interface Booking {

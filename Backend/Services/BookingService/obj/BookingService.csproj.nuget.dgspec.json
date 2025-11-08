@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\BookingService\\BookingService.csproj": {}
+    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Services\\BookingService\\BookingService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj": {
+    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\SANKET\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\obj\\",
+        "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj"
+              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj"
               }
             }
           }
@@ -73,14 +73,14 @@
         }
       }
     },
-    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\SANKET\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -101,11 +101,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj"
+              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj"
+              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj"
               }
             }
           }
@@ -163,14 +163,14 @@
         }
       }
     },
-    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj": {
+    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj",
+        "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\SANKET\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\obj\\",
+        "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -228,14 +228,14 @@
         }
       }
     },
-    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\BookingService\\BookingService.csproj": {
+    "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Services\\BookingService\\BookingService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\BookingService\\BookingService.csproj",
+        "projectUniqueName": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Services\\BookingService\\BookingService.csproj",
         "projectName": "BookingService",
-        "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\BookingService\\BookingService.csproj",
+        "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Services\\BookingService\\BookingService.csproj",
         "packagesPath": "C:\\Users\\SANKET\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Services\\BookingService\\obj\\",
+        "outputPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Services\\BookingService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -256,14 +256,14 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Domain\\Domain.csproj"
+              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Infrastructure\\Infrastructure.csproj"
               },
-              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\src\\Common\\Shared\\Shared.csproj"
+              "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\SANKET\\Desktop\\SmartLocalBusiness\\Backend\\Common\\Shared\\Shared.csproj"
               }
             }
           }

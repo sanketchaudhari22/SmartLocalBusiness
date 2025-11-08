@@ -3,24 +3,130 @@
 @tailwind utilities;
 
 /* ---------------------------------------------------
-   Fonts (Light + Semi-Bold + Playfair headings)
---------------------------------------------------- */
+   🌈 Fonts
+   --------------------------------------------------- */
 @import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
 @import "@fontsource/poppins/600.css";
 @import "@fontsource/playfair-display/600.css";
 
 /* ---------------------------------------------------
-   Global Styles
---------------------------------------------------- */
+   🌍 Base Styling
+   --------------------------------------------------- */
+:root {
+  --color-bg-light: #f8f9fa;
+  --color-text-dark: #333;
+  --color-accent: #667eea;
+  --color-accent-2: #764ba2;
+  --color-accent-3: #9b5de5;
+  --color-warning: #ffc107;
+}
+
 body {
-  @apply bg-background text-text font-sans antialiased;
+  @apply font-sans bg-[var(--color-bg-light)] text-[var(--color-text-dark)] antialiased selection:bg-[#667eea]/20;
 }
 
-/* Optional — for smoother UI feel */
+/* Headings use Playfair for elegant feel */
 h1, h2, h3, h4, h5 {
-  @apply font-['Playfair_Display'] text-primary-800;
+  font-family: "Playfair Display", serif;
+  @apply text-[#333];
 }
 
-button {
-  @apply transition-all duration-200;
+/* Buttons, links, and inputs smooth hover */
+button, a, input, select, textarea {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* ---------------------------------------------------
+   ✨ Utility Styles
+   --------------------------------------------------- */
+
+/* Soft gradient background for sections */
+.gradient-section {
+  @apply bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#9b5de5];
+}
+
+/* Card Shadows */
+.shadow-card {
+  @apply shadow-[0_2px_10px_rgba(0,0,0,0.08)];
+}
+
+.shadow-hover:hover {
+  @apply shadow-[0_6px_20px_rgba(0,0,0,0.15)];
+}
+
+/* Button gradient (for primary actions) */
+.btn-gradient {
+  @apply bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold px-5 py-2 rounded-xl shadow hover:opacity-90;
+}
+
+/* ---------------------------------------------------
+   🎞️ Animations
+   --------------------------------------------------- */
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.4s ease-out;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------
+   🌟 Special Touches
+   --------------------------------------------------- */
+
+/* Verified Badge */
+.badge-verified {
+  @apply bg-white/90 text-[#4F46E5] text-xs font-semibold px-3 py-1 rounded-full shadow flex items-center gap-1;
+}
+
+/* Emoji Banner */
+.emoji-banner {
+  @apply text-6xl flex justify-center items-center bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white;
+}
+
+/* Glow on hover (used on links/buttons) */
+.hover-glow:hover {
+  filter: drop-shadow(0 0 0.5rem #764ba2aa);
+}
+
+/* Section Title */
+.section-title {
+  @apply text-4xl font-bold text-center text-[#333] mb-12;
 }
