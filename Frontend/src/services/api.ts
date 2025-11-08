@@ -60,12 +60,33 @@ export const userService = {
   updateUser: (id: number, data: Partial<User>) =>
     api.put<ApiResponse<User>>(`/user/api/users/${id}`, data),
 
+  // ✅ FIXED: Better JWT token decoding
   getCurrentUser: () => {
     const token = localStorage.getItem("token");
     if (!token) return null;
+    
     try {
-      return JSON.parse(atob(token.split(".")[1]));
-    } catch {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      console.log("🔍 Decoded JWT Token:", payload);
+      
+      // ✅ Handle different JWT claim names (common in .NET)
+      const userId = payload.nameid || payload.userId || payload.sub || payload.id;
+      const email = payload.email || payload.unique_name;
+      const firstName = payload.given_name || payload.firstName || payload.name?.split(' ')[0];
+      const lastName = payload.family_name || payload.lastName || payload.name?.split(' ')[1];
+      const userType = payload.role || payload.userType;
+      
+      console.log("✅ Extracted User Info:", { userId, email, firstName, lastName, userType });
+      
+      return {
+        userId: userId ? parseInt(userId) : null,
+        email,
+        firstName: firstName || "User",
+        lastName: lastName || "",
+        userType: userType || "Customer"
+      };
+    } catch (error) {
+      console.error("❌ Token decode error:", error);
       return null;
     }
   },

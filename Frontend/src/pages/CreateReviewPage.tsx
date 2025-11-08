@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { reviewService } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { Star, Sparkles, ArrowLeft } from "lucide-react";
 
 export const CreateReviewPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const businessId = searchParams.get("businessId");
 
@@ -18,8 +20,21 @@ export const CreateReviewPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check if user is logged in
+    if (!user) {
+      setError("You must be logged in to write a review");
+      navigate("/login");
+      return;
+    }
+
     if (rating === 0) {
       setError("Please select a rating before submitting ✨");
+      return;
+    }
+
+    if (!businessId) {
+      setError("Invalid business ID");
       return;
     }
 
@@ -29,7 +44,7 @@ export const CreateReviewPage = () => {
     try {
       await reviewService.create({
         businessId: Number(businessId),
-        userId: 1, // Replace with actual logged-in user
+        userId: user.userId, // ✅ NOW DYNAMIC - Using actual logged-in user
         rating,
         reviewText,
       });
@@ -40,6 +55,23 @@ export const CreateReviewPage = () => {
       setLoading(false);
     }
   };
+
+  // Redirect if not authenticated
+  if (!user) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-[#f8f9fa] via-white to-[#f3f0ff] text-gray-700">
+        <p className="text-xl font-semibold mb-4">
+          Please log in to write a review 🔒
+        </p>
+        <Button
+          onClick={() => navigate("/login")}
+          className="bg-[#667eea] hover:bg-[#5a55d6] text-white"
+        >
+          Go to Login
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] via-white to-[#f3f0ff] py-12">
@@ -74,6 +106,13 @@ export const CreateReviewPage = () => {
               </Button>
             </div>
 
+            {/* Display logged-in user info */}
+            <div className="mb-6 p-3 bg-blue-50 border border-blue-100 rounded-lg">
+              <p className="text-sm text-[#444]">
+                <strong>Posting as:</strong> {user.firstName} {user.lastName} ({user.email})
+              </p>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
                 <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
@@ -95,6 +134,7 @@ export const CreateReviewPage = () => {
                       onMouseEnter={() => setHoverRating(star)}
                       onMouseLeave={() => setHoverRating(0)}
                       className="focus:outline-none"
+                      aria-label={`Rate ${star} stars`}
                     >
                       <Star
                         className={`w-10 h-10 transition-transform transform hover:scale-110 ${
@@ -106,19 +146,26 @@ export const CreateReviewPage = () => {
                     </button>
                   ))}
                 </div>
+                {rating > 0 && (
+                  <p className="mt-2 text-sm text-center md:text-left text-[#666]">
+                    You rated: <strong>{rating} star{rating > 1 ? 's' : ''}</strong>
+                  </p>
+                )}
               </div>
 
               {/* Review Text */}
               <div>
                 <label className="block text-sm font-semibold text-[#555] mb-2">
-                  Your Review
+                  Your Review {reviewText.length > 0 && (
+                    <span className="text-xs text-gray-500">({reviewText.length} characters)</span>
+                  )}
                 </label>
                 <textarea
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent outline-none text-[#333]"
                   rows={6}
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
-                  placeholder="Share what you liked or didn’t like..."
+                  placeholder="Share what you liked or didn't like..."
                 />
               </div>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { bookingService, businessService } from "../services/api";
+import { bookingService, businessService, serviceService } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Card } from "../components/ui/Card";
@@ -8,13 +9,14 @@ import { Calendar, Clock, DollarSign, ArrowLeft, Sparkles } from "lucide-react";
 
 export const CreateBookingPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const businessId = searchParams.get("businessId");
 
   const [formData, setFormData] = useState({
-    userId: 1,
+    userId: 0, // ✅ Initialize as 0, update when user loads
     businessId: Number(businessId) || 0,
-    serviceId: 1,
+    serviceId: 0,
     bookingDate: "",
     notes: "",
   });
@@ -22,12 +24,33 @@ export const CreateBookingPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [business, setBusiness] = useState<any>(null);
+  const [services, setServices] = useState<any[]>([]);
+  const [selectedService, setSelectedService] = useState<any>(null);
   const [loadingBusiness, setLoadingBusiness] = useState(true);
+  const [loadingServices, setLoadingServices] = useState(true);
+
+  // ✅ Update userId when user loads
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({ ...prev, userId: user.userId }));
+    }
+  }, [user]);
 
   useEffect(() => {
-    if (businessId) loadBusiness();
-    else setLoadingBusiness(false);
-  }, [businessId]);
+    // Redirect to login if not authenticated
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    if (businessId) {
+      loadBusiness();
+      loadServices();
+    } else {
+      setLoadingBusiness(false);
+      setLoadingServices(false);
+    }
+  }, [businessId, user, navigate]);
 
   const loadBusiness = async () => {
     try {
@@ -35,15 +58,56 @@ export const CreateBookingPage = () => {
       setBusiness(response.data.data);
     } catch (error) {
       console.error("Error loading business:", error);
+      setError("Failed to load business details");
     } finally {
       setLoadingBusiness(false);
     }
   };
 
+  const loadServices = async () => {
+    try {
+      const response = await serviceService.getByBusinessId(Number(businessId));
+      const serviceData = response.data.data;
+      setServices(serviceData);
+      
+      // Set first service as default
+      if (serviceData.length > 0) {
+        setSelectedService(serviceData[0]);
+        setFormData(prev => ({ 
+          ...prev, 
+          serviceId: serviceData[0].serviceId 
+        }));
+      }
+    } catch (error) {
+      console.error("Error loading services:", error);
+      setError("Failed to load services");
+    } finally {
+      setLoadingServices(false);
+    }
+  };
+
+  const handleServiceChange = (serviceId: number) => {
+    const service = services.find(s => s.serviceId === serviceId);
+    setSelectedService(service || null);
+    setFormData({ ...formData, serviceId: Number(serviceId) });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!user) {
+      setError("You must be logged in to make a booking");
+      navigate("/login");
+      return;
+    }
+
     if (!formData.bookingDate) {
       setError("Please select a date and time!");
+      return;
+    }
+
+    if (!formData.serviceId) {
+      setError("Please select a service!");
       return;
     }
 
@@ -51,9 +115,14 @@ export const CreateBookingPage = () => {
     setError("");
 
     try {
-      await bookingService.create(formData);
+      // ✅ Use user.userId directly to be safe
+      await bookingService.create({
+        ...formData,
+        userId: user.userId
+      });
       navigate("/dashboard?tab=bookings");
     } catch (err: any) {
+      console.error("Booking error:", err); // ✅ Add console log
       setError(err.response?.data?.message || "Booking failed");
     } finally {
       setLoading(false);
@@ -61,7 +130,7 @@ export const CreateBookingPage = () => {
   };
 
   // 🌀 Loading state
-  if (loadingBusiness) {
+  if (loadingBusiness || loadingServices) {
     return (
       <div className="flex justify-center items-center h-screen bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white">
         <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-yellow-400"></div>
@@ -86,6 +155,9 @@ export const CreateBookingPage = () => {
       </div>
     );
   }
+
+  // Calculate total amount from selected service
+  const totalAmount = selectedService?.price || 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] via-white to-[#f3f0ff] py-12">
@@ -145,27 +217,40 @@ export const CreateBookingPage = () => {
                 />
               </div>
 
-              {/* Service Dropdown */}
+              {/* Service Dropdown - NOW DYNAMIC */}
               <div>
                 <label className="block text-sm font-semibold text-[#555] mb-2">
                   <Clock className="inline w-4 h-4 mr-2 text-[#667eea]" />
                   Choose Service
                 </label>
-                <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] outline-none text-[#333]"
-                  value={formData.serviceId}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      serviceId: Number(e.target.value),
-                    })
-                  }
-                >
-                  <option value="1">Haircut – $30</option>
-                  <option value="2">Color Treatment – $80</option>
-                  <option value="3">Styling – $50</option>
-                </select>
+                {services.length === 0 ? (
+                  <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg text-center text-gray-600">
+                    No services available for this business
+                  </div>
+                ) : (
+                  <select
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] outline-none text-[#333]"
+                    value={formData.serviceId}
+                    onChange={(e) => handleServiceChange(Number(e.target.value))}
+                    required
+                  >
+                    {services.map((service) => (
+                      <option key={service.serviceId} value={service.serviceId}>
+                        {service.serviceName} – ${service.price.toFixed(2)}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
+
+              {/* Service Description */}
+              {selectedService?.description && (
+                <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                  <p className="text-sm text-[#444]">
+                    <strong>About this service:</strong> {selectedService.description}
+                  </p>
+                </div>
+              )}
 
               {/* Notes */}
               <div>
@@ -183,13 +268,13 @@ export const CreateBookingPage = () => {
                 />
               </div>
 
-              {/* Amount */}
+              {/* Amount - NOW DYNAMIC */}
               <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
                 <div className="flex justify-between items-center">
                   <span className="text-[#555] font-semibold">Total Amount</span>
                   <span className="text-2xl font-bold text-[#764ba2]">
                     <DollarSign className="inline w-6 h-6 mr-1" />
-                    30.00
+                    {totalAmount.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -207,6 +292,7 @@ export const CreateBookingPage = () => {
                 <Button
                   type="submit"
                   loading={loading}
+                  disabled={services.length === 0}
                   className="flex-1 bg-[#667eea] hover:bg-[#5a55d6] text-white font-semibold"
                 >
                   Confirm Booking

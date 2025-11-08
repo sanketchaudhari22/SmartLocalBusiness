@@ -64,6 +64,13 @@ export interface SearchRequest {
   pageNumber: number;
   pageSize: number;
 }
+export interface Service {
+  serviceId: number;
+  serviceName: string;
+  description?: string;
+  price: number;
+  businessId: number;
+}
 
 export interface ApiResponse<T> {
   success: boolean;

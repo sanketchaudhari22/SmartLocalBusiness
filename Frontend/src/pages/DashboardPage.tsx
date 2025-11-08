@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { bookingService } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 import type { Booking } from "../types";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
@@ -9,23 +10,63 @@ import { Calendar, Clock, DollarSign, Sparkles } from "lucide-react";
 export const DashboardPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const activeTab = searchParams.get("tab") || "bookings";
 
   useEffect(() => {
+    console.log("🔍 Dashboard: Auth loading:", authLoading, "User:", user);
+    
+    // Wait for auth to complete
+    if (authLoading) {
+      return;
+    }
+
+    // Redirect to login if not authenticated
+    if (!user) {
+      console.log("❌ No user found, redirecting to login");
+      navigate('/login');
+      return;
+    }
+
+    console.log("✅ User authenticated, loading bookings");
     loadBookings();
-  }, []);
+  }, [user, authLoading, navigate]);
 
   const loadBookings = async () => {
+    if (!user) {
+      console.log("❌ Cannot load bookings: no user");
+      return;
+    }
+
+    console.log("📅 Loading bookings for user:", user.userId);
+    
     try {
-      const userId = 1; // Replace with logged-in user ID later
-      const response = await bookingService.getUserBookings(userId);
+      const response = await bookingService.getUserBookings(user.userId);
+      console.log("✅ Bookings loaded:", response.data.data);
       setBookings(response.data.data);
     } catch (error) {
-      console.error("Error loading bookings:", error);
+      console.error("❌ Error loading bookings:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCancelBooking = async (bookingId: number) => {
+    if (!confirm("Are you sure you want to cancel this booking?")) {
+      return;
+    }
+
+    try {
+      console.log("🗑️ Cancelling booking:", bookingId);
+      await bookingService.cancel(bookingId);
+      console.log("✅ Booking cancelled successfully");
+      // Reload bookings after cancellation
+      loadBookings();
+    } catch (error) {
+      console.error("❌ Error cancelling booking:", error);
+      alert("Failed to cancel booking. Please try again.");
     }
   };
 
@@ -42,6 +83,25 @@ export const DashboardPage = () => {
     }
   };
 
+  // Show loading if auth is still loading
+  if (authLoading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-yellow-400 mb-4"></div>
+        <p className="text-lg">Loading your account...</p>
+      </div>
+    );
+  }
+
+  // Show loading if user check is in progress
+  if (!user) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-yellow-400"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] via-white to-[#f3f0ff]">
       {/* 🌈 Header */}
@@ -52,15 +112,14 @@ export const DashboardPage = () => {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 text-center">
-        <Sparkles className="w-10 h-10 text-[#ffc107] animate-pulse mx-auto mb-4" />
-        <h1 className="text-5xl font-extrabold mb-2 text-white">
-          My Dashboard
-        </h1>
-        <p className="text-white/90 text-lg">
-          Manage your bookings and keep track of your activity 💼
-        </p>
-      </div>
-
+          <Sparkles className="w-10 h-10 text-[#ffc107] animate-pulse mx-auto mb-4" />
+          <h1 className="text-5xl font-extrabold mb-2 text-white">
+            Welcome, {user.firstName}! 👋
+          </h1>
+          <p className="text-white/90 text-lg">
+            Manage your bookings and keep track of your activity 💼
+          </p>
+        </div>
       </div>
 
       {/* 📊 Tabs & Content */}
@@ -148,27 +207,20 @@ export const DashboardPage = () => {
                             size="sm"
                             variant="outline"
                             className="border-red-500 text-red-600 hover:bg-red-50"
-                            onClick={async () => {
-                              if (confirm("Cancel this booking?")) {
-                                await bookingService.cancel(booking.bookingId);
-                                loadBookings();
-                              }
-                            }}
+                            onClick={() => handleCancelBooking(booking.bookingId)}
                           >
                             Cancel
                           </Button>
                         )}
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-[#555]">
+                      <div className="space-y-3 text-[#555]">
                         <div className="flex items-center">
                           <Calendar className="w-5 h-5 mr-2 text-[#667eea]" />
                           <div>
                             <p className="text-sm text-gray-500">Date</p>
                             <p className="font-medium">
-                              {new Date(
-                                booking.bookingDate
-                              ).toLocaleDateString()}
+                              {new Date(booking.bookingDate).toLocaleDateString()}
                             </p>
                           </div>
                         </div>
@@ -178,9 +230,7 @@ export const DashboardPage = () => {
                           <div>
                             <p className="text-sm text-gray-500">Time</p>
                             <p className="font-medium">
-                              {new Date(
-                                booking.bookingDate
-                              ).toLocaleTimeString()}
+                              {new Date(booking.bookingDate).toLocaleTimeString()}
                             </p>
                           </div>
                         </div>
@@ -189,9 +239,7 @@ export const DashboardPage = () => {
                           <DollarSign className="w-5 h-5 mr-2 text-[#ffc107]" />
                           <div>
                             <p className="text-sm text-gray-500">Amount</p>
-                            <p className="font-medium">
-                              ${booking.totalAmount}
-                            </p>
+                            <p className="font-medium">${booking.totalAmount.toFixed(2)}</p>
                           </div>
                         </div>
                       </div>
@@ -219,7 +267,7 @@ export const DashboardPage = () => {
               Reviews Dashboard Coming Soon 💬
             </h3>
             <p className="text-[#666]">
-              You’ll soon be able to manage and edit your reviews here!
+              You'll soon be able to manage and edit your reviews here!
             </p>
           </Card>
         )}

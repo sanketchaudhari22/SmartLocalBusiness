@@ -2,8 +2,7 @@ using SmartLocalBusiness.Shared.DTOs;
 using SmartLocalBusiness.Domain.Entities;
 using SmartLocalBusiness.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace SmartLocalBusiness.UserService.Services
 {
@@ -11,92 +10,167 @@ namespace SmartLocalBusiness.UserService.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IJwtService _jwtService;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(ApplicationDbContext context, IJwtService jwtService)
+        public UserService(
+            ApplicationDbContext context, 
+            IJwtService jwtService,
+            ILogger<UserService> logger)
         {
             _context = context;
             _jwtService = jwtService;
-        }
-
-        public async Task<UserDto> RegisterAsync(RegisterUserDto dto)
-        {
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
-            if (existingUser != null)
-                throw new Exception("Email already exists");
-
-            var user = new User
-            {
-                Email = dto.Email,
-                PasswordHash = HashPassword(dto.Password),
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                PhoneNumber = dto.PhoneNumber,
-                UserType = dto.UserType,
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return MapToDto(user);
+            _logger = logger;
         }
 
         public async Task<string> LoginAsync(LoginDto dto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
-            if (user == null || !VerifyPassword(dto.Password, user.PasswordHash))
-                throw new Exception("Invalid credentials");
+            try
+            {
+                _logger.LogInformation("🔍 Looking up user by email: {Email}", dto.Email);
+                
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
-            if (!user.IsActive)
-                throw new Exception("Account is inactive");
+                if (user == null)
+                {
+                    _logger.LogWarning("❌ User not found: {Email}", dto.Email);
+                    throw new Exception("Invalid email or password.");
+                }
 
-            return _jwtService.GenerateToken(user);
+                // Verify password (temp plain check - in production use BCrypt/PBKDF2)
+                if (user.PasswordHash != dto.Password)
+                {
+                    _logger.LogWarning("❌ Invalid password for user: {Email}", dto.Email);
+                    throw new Exception("Invalid email or password.");
+                }
+
+                _logger.LogInformation("✅ User authenticated, generating token: {Email}", dto.Email);
+                var token = _jwtService.GenerateToken(user);
+                
+                return token;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "❌ Login error for: {Email}", dto.Email);
+                throw;
+            }
         }
 
-        public async Task<UserDto> GetUserByIdAsync(int userId)
+        public async Task<UserDto> RegisterAsync(RegisterUserDto dto)
         {
-            var user = await _context.Users.FindAsync(userId);
-            if (user == null)
-                throw new Exception("User not found");
+            try
+            {
+                _logger.LogInformation("🔍 Checking if user exists: {Email}", dto.Email);
+                
+                var existing = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Email == dto.Email);
+                
+                if (existing != null)
+                {
+                    _logger.LogWarning("❌ User already exists: {Email}", dto.Email);
+                    throw new Exception("User with this email already exists.");
+                }
 
-            return MapToDto(user);
+                var user = new User
+                {
+                    FirstName = dto.FirstName,
+                    LastName = dto.LastName,
+                    Email = dto.Email,
+                    PasswordHash = dto.Password, // ⚠️ In production: use BCrypt.HashPassword(dto.Password)
+                    PhoneNumber = dto.PhoneNumber,
+                    UserType = dto.UserType ?? "Customer",
+                    CreatedAt = DateTime.UtcNow // Add this if your User entity has it
+                };
+
+                _logger.LogInformation("➕ Adding new user to database: {Email}", dto.Email);
+                _context.Users.Add(user);
+                
+                await _context.SaveChangesAsync();
+                
+                _logger.LogInformation("✅ User registered successfully: {Email}, UserId: {UserId}", 
+                    dto.Email, user.UserId);
+
+                return new UserDto
+                {
+                    UserId = user.UserId,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.PhoneNumber,
+                    UserType = user.UserType
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "❌ Registration error for: {Email}", dto.Email);
+                throw;
+            }
         }
 
-        public async Task<UserDto> UpdateUserAsync(int userId, UserDto dto)
+        public async Task<UserDto> GetUserByIdAsync(int id)
         {
-            var user = await _context.Users.FindAsync(userId);
-            if (user == null)
-                throw new Exception("User not found");
+            try
+            {
+                _logger.LogInformation("🔍 Fetching user by ID: {UserId}", id);
+                
+                var user = await _context.Users.FindAsync(id);
+                
+                if (user == null)
+                {
+                    _logger.LogWarning("❌ User not found: {UserId}", id);
+                    throw new Exception("User not found.");
+                }
 
-            user.FirstName = dto.FirstName;
-            user.LastName = dto.LastName;
-            user.PhoneNumber = dto.PhoneNumber;
-            user.UpdatedAt = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync();
-            return MapToDto(user);
+                _logger.LogInformation("✅ User found: {UserId}", id);
+                
+                return new UserDto
+                {
+                    UserId = user.UserId,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.PhoneNumber,
+                    UserType = user.UserType
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "❌ Error fetching user: {UserId}", id);
+                throw;
+            }
         }
 
-        private string HashPassword(string password)
+        public async Task<UserDto> UpdateUserAsync(int id, UserDto dto)
         {
-            using var sha256 = SHA256.Create();
-            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return Convert.ToBase64String(hashedBytes);
+            try
+            {
+                _logger.LogInformation("🔍 Updating user: {UserId}", id);
+                
+                var user = await _context.Users.FindAsync(id);
+                
+                if (user == null)
+                {
+                    _logger.LogWarning("❌ User not found: {UserId}", id);
+                    throw new Exception("User not found.");
+                }
+
+                user.FirstName = dto.FirstName;
+                user.LastName = dto.LastName;
+                user.PhoneNumber = dto.PhoneNumber;
+                user.UserType = dto.UserType;
+
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+                
+                _logger.LogInformation("✅ User updated: {UserId}", id);
+
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "❌ Error updating user: {UserId}", id);
+                throw;
+            }
         }
-
-        private bool VerifyPassword(string password, string hash)
-            => HashPassword(password) == hash;
-
-        private UserDto MapToDto(User user) => new UserDto
-        {
-            UserId = user.UserId,
-            Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            UserType = user.UserType
-        };
     }
 }

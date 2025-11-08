@@ -1,6 +1,6 @@
-using SmartLocalBusiness.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SmartLocalBusiness.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -10,31 +10,40 @@ namespace SmartLocalBusiness.UserService.Services
     public class JwtService : IJwtService
     {
         private readonly IConfiguration _config;
-        public JwtService(IConfiguration config) => _config = config;
+
+        public JwtService(IConfiguration config)
+        {
+            _config = config;
+        }
 
         public string GenerateToken(User user)
         {
-            var jwtSettings = _config.GetSection("JwtSettings");
-            var secret = jwtSettings["Secret"];
-            var issuer = jwtSettings["Issuer"];
-            var audience = jwtSettings["Audience"];
-            var expirationDays = int.Parse(jwtSettings["ExpirationInDays"]);
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+            // ✅ FIX: Use JwtSettings instead of Jwt to match appsettings.json
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Secret"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
+                // ✅ FIX: Use standard .NET claim name - this becomes "nameid" in JWT
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.UserType)
+                
+                // Keep custom claim as backup
+                new Claim("userId", user.UserId.ToString()),
+                
+                new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
+                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}".Trim()),
+                new Claim(ClaimTypes.Role, user.UserType ?? "Customer"),
+                
+                // Add these for better frontend compatibility
+                new Claim("given_name", user.FirstName ?? ""),
+                new Claim("family_name", user.LastName ?? "")
             };
 
             var token = new JwtSecurityToken(
-                issuer: issuer,
-                audience: audience,
+                issuer: _config["JwtSettings:Issuer"],
+                audience: _config["JwtSettings:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(expirationDays),
+                expires: DateTime.UtcNow.AddDays(int.Parse(_config["JwtSettings:ExpirationInDays"] ?? "7")),
                 signingCredentials: creds
             );
 

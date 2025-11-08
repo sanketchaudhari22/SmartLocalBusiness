@@ -106,9 +106,6 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\obj\Debug\ne
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\obj\Debug\net9.0\UserService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\obj\Debug\net9.0\UserService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\UserService\obj\Debug\net9.0\ref\UserService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\UserService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\refint\UserService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\UserService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\bin\Debug\net9.0\appsettings.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\bin\Debug\net9.0\UserService.staticwebassets.endpoints.json
@@ -203,5 +200,8 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debu
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\UserServ.57764DC8.Up2Date
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\UserService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\refint\UserService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\UserService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\UserService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\ref\UserService.dll

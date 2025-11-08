@@ -11,10 +11,7 @@ namespace SmartLocalBusiness.Domain.Entities
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
-        
-        // ✅ FIXED: Changed from "Role" to "UserType" to match JWT service
         public string UserType { get; set; } = "Customer";
-        
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
