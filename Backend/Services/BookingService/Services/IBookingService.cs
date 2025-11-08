@@ -10,5 +10,8 @@ namespace SmartLocalBusiness.BookingService.Interfaces
         Task<List<BookingDto>> GetBusinessBookingsAsync(int businessId);
         Task<BookingDto> UpdateBookingStatusAsync(int bookingId, string status);
         Task<bool> CancelBookingAsync(int bookingId);
+        Task<List<BookingDto>> GetUpcomingBookingsAsync(int userId);
+        Task<List<BookingDto>> GetBookingHistoryAsync(int userId);
+
     }
 }

@@ -66,11 +66,12 @@ namespace BusinessService.Services
             return dto;
         }
 
+        // ✅ FIXED bool? => bool comparison
         public async Task<List<BusinessDto>> GetAllBusinessesAsync()
         {
             var businesses = await _context.Businesses
                 .Include(b => b.Category)
-                .Where(b => b.IsActive == true) // ✅ fixed
+                .Where(b => b.IsActive == true)  // ✅ cast fixed
                 .ToListAsync();
 
             return businesses.Select(MapToDto).ToList();
@@ -78,9 +79,8 @@ namespace BusinessService.Services
 
         public async Task<BusinessDto> UpdateBusinessAsync(int businessId, CreateBusinessDto dto)
         {
-            var business = await _context.Businesses.FindAsync(businessId);
-            if (business == null)
-                throw new Exception("Business not found");
+            var business = await _context.Businesses.FindAsync(businessId)
+                ?? throw new Exception("Business not found");
 
             business.BusinessName = dto.BusinessName;
             business.Description = dto.Description;
@@ -112,46 +112,54 @@ namespace BusinessService.Services
             return true;
         }
 
+        // ✅ FIXED bool? in where condition
         public async Task<List<BusinessDto>> GetBusinessesByCategoryAsync(int categoryId)
         {
             var businesses = await _context.Businesses
                 .Include(b => b.Category)
-                .Where(b => b.CategoryId == categoryId && b.IsActive == true) // ✅ fixed
+                .Where(b => b.CategoryId == categoryId && b.IsActive == true)  // ✅ fixed
                 .ToListAsync();
 
             return businesses.Select(MapToDto).ToList();
         }
 
-   private BusinessDto MapToDto(Business business)
-{
-    return new BusinessDto
-    {
-        BusinessId = business.BusinessId,
-        UserId = business.UserId ?? 0,
-        CategoryId = business.CategoryId.HasValue ? business.CategoryId.Value : 0, // ✅ FIXED
-        BusinessName = business.BusinessName ?? string.Empty,
-        Description = business.Description ?? string.Empty,
-        Address = business.Address ?? string.Empty,
-        City = business.City ?? string.Empty,
-        State = business.State ?? string.Empty,
-        ZipCode = business.ZipCode ?? string.Empty,
-        Latitude = business.Latitude ?? 0,
-        Longitude = business.Longitude ?? 0,
-        PhoneNumber = business.PhoneNumber ?? string.Empty,
-        Email = business.Email ?? string.Empty,
-        Website = business.Website ?? string.Empty,
-        Rating = business.Rating ?? 0,
-        TotalReviews = business.TotalReviews ?? 0,
-        IsVerified = business.IsVerified ?? false,
-        IsActive = business.IsActive ?? true,
-        CreatedAt = business.CreatedAt ?? DateTime.UtcNow,
-        UpdatedAt = business.UpdatedAt ?? DateTime.UtcNow,
-        CategoryName = business.Category?.CategoryName ?? string.Empty
-    };
-}
+        // 🆕 Businesses by User (Dashboard)
+        public async Task<List<BusinessDto>> GetBusinessesByUserAsync(int userId)
+        {
+            var businesses = await _context.Businesses
+                .Include(b => b.Category)
+                .Where(b => b.UserId == userId && b.IsActive == true)  // ✅ fixed
+                .ToListAsync();
 
+            return businesses.Select(MapToDto).ToList();
+        }
 
-
-
+        private static BusinessDto MapToDto(Business business)
+        {
+            return new BusinessDto
+            {
+                BusinessId = business.BusinessId,
+                UserId = business.UserId ?? 0,
+                CategoryId = business.CategoryId ?? 0,
+                BusinessName = business.BusinessName ?? string.Empty,
+                Description = business.Description ?? string.Empty,
+                Address = business.Address ?? string.Empty,
+                City = business.City ?? string.Empty,
+                State = business.State ?? string.Empty,
+                ZipCode = business.ZipCode ?? string.Empty,
+                Latitude = business.Latitude ?? 0,
+                Longitude = business.Longitude ?? 0,
+                PhoneNumber = business.PhoneNumber ?? string.Empty,
+                Email = business.Email ?? string.Empty,
+                Website = business.Website ?? string.Empty,
+                Rating = business.Rating ?? 0,
+                TotalReviews = business.TotalReviews ?? 0,
+                IsVerified = business.IsVerified ?? false,
+                IsActive = business.IsActive ?? true,
+                CreatedAt = business.CreatedAt ?? DateTime.UtcNow,
+                UpdatedAt = business.UpdatedAt ?? DateTime.UtcNow,
+                CategoryName = business.Category?.CategoryName ?? string.Empty
+            };
+        }
     }
 }

@@ -9,20 +9,17 @@ namespace SmartLocalBusiness.BookingService.Services
     public class BookingService : IBookingService
     {
         private readonly ApplicationDbContext _context;
-
         public BookingService(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        // ✅ Create
         public async Task<BookingDto> CreateBookingAsync(CreateBookingDto dto)
         {
-            var service = await _context.Services
-                .Include(s => s.Business)
-                .FirstOrDefaultAsync(s => s.ServiceId == dto.ServiceId);
-
-            if (service == null)
-                throw new Exception("Service not found");
+            var service = await _context.Services.Include(s => s.Business)
+                .FirstOrDefaultAsync(s => s.ServiceId == dto.ServiceId)
+                ?? throw new Exception("Service not found");
 
             var booking = new Booking
             {
@@ -39,24 +36,23 @@ namespace SmartLocalBusiness.BookingService.Services
 
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
-
             return await GetBookingByIdAsync(booking.BookingId);
         }
 
+        // ✅ Get Booking by ID
         public async Task<BookingDto> GetBookingByIdAsync(int bookingId)
         {
             var booking = await _context.Bookings
                 .Include(b => b.User)
                 .Include(b => b.Business)
                 .Include(b => b.Service)
-                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
-
-            if (booking == null)
-                throw new Exception("Booking not found");
+                .FirstOrDefaultAsync(b => b.BookingId == bookingId)
+                ?? throw new Exception("Booking not found");
 
             return MapToDto(booking);
         }
 
+        // ✅ Get User Bookings
         public async Task<List<BookingDto>> GetUserBookingsAsync(int userId)
         {
             var bookings = await _context.Bookings
@@ -69,6 +65,7 @@ namespace SmartLocalBusiness.BookingService.Services
             return bookings.Select(MapToDto).ToList();
         }
 
+        // ✅ Get Business Bookings
         public async Task<List<BookingDto>> GetBusinessBookingsAsync(int businessId)
         {
             var bookings = await _context.Bookings
@@ -81,11 +78,39 @@ namespace SmartLocalBusiness.BookingService.Services
             return bookings.Select(MapToDto).ToList();
         }
 
+        // 🆕 Upcoming Bookings
+        public async Task<List<BookingDto>> GetUpcomingBookingsAsync(int userId)
+        {
+            var now = DateTime.UtcNow;
+            var upcoming = await _context.Bookings
+                .Where(b => b.UserId == userId && b.BookingDate > now && b.Status != "Cancelled")
+                .Include(b => b.Business)
+                .Include(b => b.Service)
+                .OrderBy(b => b.BookingDate)
+                .ToListAsync();
+
+            return upcoming.Select(MapToDto).ToList();
+        }
+
+        // 🆕 Booking History
+        public async Task<List<BookingDto>> GetBookingHistoryAsync(int userId)
+        {
+            var now = DateTime.UtcNow;
+            var history = await _context.Bookings
+                .Where(b => b.UserId == userId && b.BookingDate <= now)
+                .Include(b => b.Business)
+                .Include(b => b.Service)
+                .OrderByDescending(b => b.BookingDate)
+                .ToListAsync();
+
+            return history.Select(MapToDto).ToList();
+        }
+
+        // ✅ Update Status
         public async Task<BookingDto> UpdateBookingStatusAsync(int bookingId, string status)
         {
-            var booking = await _context.Bookings.FindAsync(bookingId);
-            if (booking == null)
-                throw new Exception("Booking not found");
+            var booking = await _context.Bookings.FindAsync(bookingId)
+                ?? throw new Exception("Booking not found");
 
             var validStatuses = new[] { "Pending", "Confirmed", "Completed", "Cancelled" };
             if (!validStatuses.Contains(status))
@@ -93,11 +118,12 @@ namespace SmartLocalBusiness.BookingService.Services
 
             booking.Status = status;
             booking.UpdatedAt = DateTime.UtcNow;
-
             await _context.SaveChangesAsync();
+
             return await GetBookingByIdAsync(bookingId);
         }
 
+        // ✅ Cancel Booking
         public async Task<bool> CancelBookingAsync(int bookingId)
         {
             var booking = await _context.Bookings.FindAsync(bookingId);
@@ -105,24 +131,21 @@ namespace SmartLocalBusiness.BookingService.Services
 
             booking.Status = "Cancelled";
             booking.UpdatedAt = DateTime.UtcNow;
-
             await _context.SaveChangesAsync();
+
             return true;
         }
 
-        private static BookingDto MapToDto(Booking booking)
+        private static BookingDto MapToDto(Booking b) => new()
         {
-            return new BookingDto
-            {
-                BookingId = booking.BookingId,
-                UserId = booking.UserId,
-                BusinessId = booking.BusinessId,
-                ServiceId = booking.ServiceId,
-                BookingDate = booking.BookingDate,
-                Status = booking.Status,
-                TotalAmount = booking.TotalAmount,
-                Notes = booking.Notes
-            };
-        }
+            BookingId = b.BookingId,
+            UserId = b.UserId,
+            BusinessId = b.BusinessId,
+            ServiceId = b.ServiceId,
+            BookingDate = b.BookingDate,
+            Status = b.Status,
+            TotalAmount = b.TotalAmount,
+            Notes = b.Notes
+        };
     }
 }

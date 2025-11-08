@@ -4,8 +4,6 @@ using SmartLocalBusiness.Shared.Models;
 using SmartLocalBusiness.Shared.Responses;
 using SmartLocalBusiness.Shared.DTOs;
 
-
-
 namespace SearchService.Controllers
 {
     [ApiController]
@@ -13,43 +11,33 @@ namespace SearchService.Controllers
     public class SearchController : ControllerBase
     {
         private readonly ISearchService _searchService;
-
         public SearchController(ISearchService searchService)
         {
             _searchService = searchService;
         }
 
+        // ✅ Standard Search
         [HttpPost("search")]
         public async Task<IActionResult> Search([FromBody] SearchRequest request)
         {
-            try
-            {
-                var results = await _searchService.SearchBusinessesAsync(request);
-                return Ok(ApiResponse<PagedResult<BusinessDto>>.SuccessResponse(results));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<PagedResult<BusinessDto>>.ErrorResponse(ex.Message));
-            }
+            var results = await _searchService.SearchBusinessesAsync(request);
+            return Ok(ApiResponse<PagedResult<BusinessDto>>.SuccessResponse(results));
         }
 
+        // ✅ Nearby Search
         [HttpGet("nearby")]
-        public async Task<IActionResult> GetNearby(
-            [FromQuery] decimal latitude,
-            [FromQuery] decimal longitude,
-            [FromQuery] int radiusInKm = 10,
-            [FromQuery] int? categoryId = null)
+        public async Task<IActionResult> GetNearby([FromQuery] decimal latitude, [FromQuery] decimal longitude, [FromQuery] int radiusInKm = 10, [FromQuery] int? categoryId = null)
         {
-            try
-            {
-                var businesses = await _searchService.GetNearbyBusinessesAsync(
-                    latitude, longitude, radiusInKm, categoryId);
-                return Ok(ApiResponse<List<BusinessDto>>.SuccessResponse(businesses));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<List<BusinessDto>>.ErrorResponse(ex.Message));
-            }
+            var businesses = await _searchService.GetNearbyBusinessesAsync(latitude, longitude, radiusInKm, categoryId);
+            return Ok(ApiResponse<List<BusinessDto>>.SuccessResponse(businesses));
+        }
+
+        // 🆕 Quick Search
+        [HttpGet("quick")]
+        public async Task<IActionResult> QuickSearch([FromQuery] string term, [FromQuery] int limit = 5)
+        {
+            var results = await _searchService.QuickSearchAsync(term, limit);
+            return Ok(ApiResponse<IEnumerable<BusinessDto>>.SuccessResponse(results, "Quick results fetched"));
         }
     }
 }

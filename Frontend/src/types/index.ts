@@ -50,6 +50,8 @@ export interface Review {
   rating: number;
   reviewText?: string;
   createdAt: string;
+
+  
 }
 
 export interface SearchRequest {

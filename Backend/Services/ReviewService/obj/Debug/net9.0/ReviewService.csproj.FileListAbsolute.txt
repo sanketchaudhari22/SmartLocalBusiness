@@ -173,9 +173,6 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ReviewService\obj\Debug\
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ReviewService\obj\Debug\net9.0\ReviewService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ReviewService\obj\Debug\net9.0\ReviewService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\ReviewService\obj\Debug\net9.0\ref\ReviewService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ReviewService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\refint\ReviewService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ReviewService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\bin\Debug\net9.0\appsettings.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\bin\Debug\net9.0\ReviewService.staticwebassets.endpoints.json
@@ -346,5 +343,8 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\De
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ReviewSe.23F48D1E.Up2Date
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ReviewService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\refint\ReviewService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ReviewService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ReviewService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ref\ReviewService.dll

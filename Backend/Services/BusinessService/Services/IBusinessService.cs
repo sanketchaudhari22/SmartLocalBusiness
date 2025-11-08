@@ -10,5 +10,7 @@ namespace BusinessService.Services
         Task<BusinessDto> UpdateBusinessAsync(int businessId, CreateBusinessDto dto);
         Task<bool> DeleteBusinessAsync(int businessId);
         Task<List<BusinessDto>> GetBusinessesByCategoryAsync(int categoryId);
+        Task<List<BusinessDto>> GetBusinessesByUserAsync(int userId);
+
     }
 }

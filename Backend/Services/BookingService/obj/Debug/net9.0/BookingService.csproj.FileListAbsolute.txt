@@ -347,9 +347,6 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\BookingService\obj\Debug
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\BookingService\obj\Debug\net9.0\BookingService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\BookingService\obj\Debug\net9.0\BookingService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\src\Services\BookingService\obj\Debug\net9.0\ref\BookingService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\BookingService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\refint\BookingService.dll
-C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\BookingService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\bin\Debug\net9.0\appsettings.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\bin\Debug\net9.0\BookingService.staticwebassets.endpoints.json
@@ -519,5 +516,8 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\D
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\BookingS.1E4CF696.Up2Date
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\BookingService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\refint\BookingService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\BookingService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\BookingService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\BookingService\obj\Debug\net9.0\ref\BookingService.dll

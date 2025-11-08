@@ -4,95 +4,82 @@ using SmartLocalBusiness.Domain.Entities;
 using SmartLocalBusiness.Shared.DTOs;
 using SmartLocalBusiness.Shared.Responses;
 
-
-using SmartLocalBusiness.Shared.Responses;
-
 namespace ReviewController.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ReviewController : ControllerBase
     {
         private readonly IReviewService _reviewService;
-
         public ReviewController(IReviewService reviewService)
         {
             _reviewService = reviewService;
         }
 
-        // 🔹 Get All Reviews
+        // ✅ All Reviews
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var reviews = await _reviewService.GetAllAsync();
-            return Ok(ApiResponse<IEnumerable<Review>>.SuccessResponse(reviews, "Reviews fetched successfully"));
+            return Ok(ApiResponse<IEnumerable<Review>>.SuccessResponse(reviews));
         }
 
-        // 🔹 Get Review by ID
+        // ✅ Review by Id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var review = await _reviewService.GetByIdAsync(id);
-            if (review == null)
-                return NotFound(ApiResponse<Review>.ErrorResponse("Review not found"));
-
-            return Ok(ApiResponse<Review>.SuccessResponse(review, "Review fetched successfully"));
+            return review == null
+                ? NotFound(ApiResponse<Review>.ErrorResponse("Review not found"))
+                : Ok(ApiResponse<Review>.SuccessResponse(review));
         }
 
-        // 🔹 Get Reviews by Business ID
+        // ✅ Reviews by Business
         [HttpGet("business/{businessId}")]
         public async Task<IActionResult> GetByBusinessId(int businessId)
         {
             var reviews = await _reviewService.GetByBusinessIdAsync(businessId);
-            return Ok(ApiResponse<IEnumerable<Review>>.SuccessResponse(reviews, "Reviews fetched successfully"));
+            return Ok(ApiResponse<IEnumerable<Review>>.SuccessResponse(reviews));
         }
 
-        // 🔹 Add Review (using DTO)
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] ReviewDto reviewDto)
+        // 🆕 Reviews by User
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetByUserId(int userId)
         {
-            if (reviewDto == null)
-                return BadRequest(ApiResponse<Review>.ErrorResponse("Invalid review data"));
+            var reviews = await _reviewService.GetByUserIdAsync(userId);
+            return Ok(ApiResponse<IEnumerable<Review>>.SuccessResponse(reviews));
+        }
 
-            var review = new Review
-            {
-                BusinessId = reviewDto.BusinessId,
-                UserId = reviewDto.UserId,
-                Rating = reviewDto.Rating,
-                ReviewText = reviewDto.ReviewText,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
+        // 🆕 Average Rating for Business
+        [HttpGet("business/{businessId}/average")]
+        public async Task<IActionResult> GetAverageRating(int businessId)
+        {
+            var result = await _reviewService.GetAverageRatingAsync(businessId);
+            return Ok(ApiResponse<object>.SuccessResponse(result, "Average rating fetched"));
+        }
 
-            await _reviewService.AddAsync(review);
+        // ✅ Add Review
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] ReviewDto dto)
+        {
+            var review = await _reviewService.AddAsync(dto);
             return Ok(ApiResponse<Review>.SuccessResponse(review, "Review added successfully"));
         }
 
-        // 🔹 Update Review (using DTO)
+        // ✅ Update
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ReviewDto reviewDto)
+        public async Task<IActionResult> Update(int id, [FromBody] ReviewDto dto)
         {
-            if (reviewDto == null || id != reviewDto.ReviewId)
-                return BadRequest(ApiResponse<Review>.ErrorResponse("Invalid or mismatched review data"));
-
-            var existingReview = await _reviewService.GetByIdAsync(id);
-            if (existingReview == null)
-                return NotFound(ApiResponse<Review>.ErrorResponse("Review not found"));
-
-            existingReview.Rating = reviewDto.Rating;
-            existingReview.ReviewText = reviewDto.ReviewText;
-            existingReview.UpdatedAt = DateTime.UtcNow;
-
-            await _reviewService.UpdateAsync(existingReview);
-            return Ok(ApiResponse<Review>.SuccessResponse(existingReview, "Review updated successfully"));
+            var review = await _reviewService.UpdateAsync(id, dto);
+            return Ok(ApiResponse<Review>.SuccessResponse(review, "Review updated successfully"));
         }
 
-        // 🔹 Delete Review
+        // ✅ Delete
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _reviewService.DeleteAsync(id);
-            return Ok(ApiResponse<object>.SuccessResponse(null, "Review deleted successfully"));
+            return Ok(ApiResponse<object>.SuccessResponse(null, "Review deleted"));
         }
     }
 }

@@ -9,12 +9,12 @@ namespace SearchService.Services
     public class SearchService : ISearchService
     {
         private readonly SearchDbContext _context;
-
         public SearchService(SearchDbContext context)
         {
             _context = context;
         }
 
+        // ✅ Search Businesses (stored proc)
         public async Task<PagedResult<BusinessDto>> SearchBusinessesAsync(SearchRequest request)
         {
             var parameters = new[]
@@ -24,31 +24,24 @@ namespace SearchService.Services
                 new SqlParameter("@CategoryId", request.CategoryId ?? (object)DBNull.Value)
             };
 
-            // Use SearchDbContext which has BusinessDto configured
             var businesses = await _context.Set<BusinessDto>()
                 .FromSqlRaw("EXEC sp_SearchBusinesses @SearchTerm, @City, @CategoryId", parameters)
                 .ToListAsync();
 
             var totalCount = businesses.Count;
-            var pagedBusinesses = businesses
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize)
-                .ToList();
+            var paged = businesses.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize).ToList();
 
             return new PagedResult<BusinessDto>
             {
-                Items = pagedBusinesses,
+                Items = paged,
                 TotalCount = totalCount,
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize
             };
         }
 
-        public async Task<List<BusinessDto>> GetNearbyBusinessesAsync(
-            decimal latitude,
-            decimal longitude,
-            int radiusInKm,
-            int? categoryId = null)
+        // ✅ Nearby Businesses
+        public async Task<List<BusinessDto>> GetNearbyBusinessesAsync(decimal latitude, decimal longitude, int radiusInKm, int? categoryId = null)
         {
             var parameters = new[]
             {
@@ -77,6 +70,15 @@ namespace SearchService.Services
                 IsVerified = b.IsVerified,
                 CategoryName = b.CategoryName
             }).ToList();
+        }
+
+        // 🆕 Quick Search (Autocomplete)
+        public async Task<IEnumerable<BusinessDto>> QuickSearchAsync(string term, int limit = 5)
+        {
+            return await _context.Set<BusinessDto>()
+                .Where(b => b.BusinessName.Contains(term) || b.Description.Contains(term))
+                .Take(limit)
+                .ToListAsync();
         }
     }
 }
