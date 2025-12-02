@@ -3,6 +3,7 @@ using SmartLocalBusiness.Domain.Entities;
 using SmartLocalBusiness.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using BCrypt.Net;
 
 namespace SmartLocalBusiness.UserService.Services
 {
@@ -37,8 +38,8 @@ namespace SmartLocalBusiness.UserService.Services
                     throw new Exception("Invalid email or password.");
                 }
 
-                // Verify password (temp plain check - in production use BCrypt/PBKDF2)
-                if (user.PasswordHash != dto.Password)
+                // Verify password using BCrypt
+                if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                 {
                     _logger.LogWarning("❌ Invalid password for user: {Email}", dto.Email);
                     throw new Exception("Invalid email or password.");
@@ -71,15 +72,18 @@ namespace SmartLocalBusiness.UserService.Services
                     throw new Exception("User with this email already exists.");
                 }
 
+                // Hash password using BCrypt
+                var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+
                 var user = new User
                 {
                     FirstName = dto.FirstName,
                     LastName = dto.LastName,
                     Email = dto.Email,
-                    PasswordHash = dto.Password, // ⚠️ In production: use BCrypt.HashPassword(dto.Password)
+                    PasswordHash = passwordHash, // ✅ Now properly hashed with BCrypt
                     PhoneNumber = dto.PhoneNumber,
                     UserType = dto.UserType ?? "Customer",
-                    CreatedAt = DateTime.UtcNow // Add this if your User entity has it
+                    CreatedAt = DateTime.UtcNow
                 };
 
                 _logger.LogInformation("➕ Adding new user to database: {Email}", dto.Email);

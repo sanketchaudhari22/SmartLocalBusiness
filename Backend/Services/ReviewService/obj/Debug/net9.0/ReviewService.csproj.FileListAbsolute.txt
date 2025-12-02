@@ -348,3 +348,4 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\De
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ReviewService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ReviewService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\obj\Debug\net9.0\ref\ReviewService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ReviewService\bin\Debug\net9.0\appsettings.Docker.json

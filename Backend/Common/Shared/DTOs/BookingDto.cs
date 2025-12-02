@@ -1,3 +1,5 @@
+using SmartLocalBusiness.Domain.Enums;
+
 namespace SmartLocalBusiness.Shared.DTOs
 {
     public class BookingDto
@@ -7,7 +9,7 @@ namespace SmartLocalBusiness.Shared.DTOs
         public int BusinessId { get; set; }
         public int ServiceId { get; set; }
         public DateTime BookingDate { get; set; }
-        public string Status { get; set; } = "Pending";
+        public BookingStatus Status { get; set; } = BookingStatus.Pending;  // ✅ Changed to enum
         public decimal TotalAmount { get; set; }
         public string? Notes { get; set; }
     }
@@ -23,6 +25,6 @@ namespace SmartLocalBusiness.Shared.DTOs
 
     public class UpdateStatusRequest
     {
-        public string Status { get; set; } = "Pending";
+        public BookingStatus Status { get; set; } = BookingStatus.Pending;  // ✅ Changed to enum
     }
 }

@@ -1,132 +1,340 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* ---------------------------------------------------
-   🌈 Fonts
-   --------------------------------------------------- */
-@import "@fontsource/poppins/400.css";
-@import "@fontsource/poppins/500.css";
-@import "@fontsource/poppins/600.css";
-@import "@fontsource/playfair-display/600.css";
 
-/* ---------------------------------------------------
-   🌍 Base Styling
-   --------------------------------------------------- */
-:root {
-  --color-bg-light: #f8f9fa;
-  --color-text-dark: #333;
-  --color-accent: #667eea;
-  --color-accent-2: #764ba2;
-  --color-accent-3: #9b5de5;
-  --color-warning: #ffc107;
-}
-
+/* Global base styles */
 body {
-  @apply font-sans bg-[var(--color-bg-light)] text-[var(--color-text-dark)] antialiased selection:bg-[#667eea]/20;
+  margin: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: #fafafa;
+  color: #171717;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings use Playfair for elegant feel */
-h1, h2, h3, h4, h5 {
-  font-family: "Playfair Display", serif;
-  @apply text-[#333];
+* {
+  box-sizing: border-box;
 }
 
-/* Buttons, links, and inputs smooth hover */
-button, a, input, select, textarea {
-  @apply transition-all duration-300 ease-in-out;
+/* Typography utility classes */
+.text-display-1 {
+  font-size: 3.75rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
-/* ---------------------------------------------------
-   ✨ Utility Styles
-   --------------------------------------------------- */
-
-/* Soft gradient background for sections */
-.gradient-section {
-  @apply bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#9b5de5];
+.text-display-2 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
-/* Card Shadows */
-.shadow-card {
-  @apply shadow-[0_2px_10px_rgba(0,0,0,0.08)];
+.text-h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
-.shadow-hover:hover {
-  @apply shadow-[0_6px_20px_rgba(0,0,0,0.15)];
+.text-h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
 }
 
-/* Button gradient (for primary actions) */
-.btn-gradient {
-  @apply bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold px-5 py-2 rounded-xl shadow hover:opacity-90;
+.text-h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-/* ---------------------------------------------------
-   🎞️ Animations
-   --------------------------------------------------- */
+.text-h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
 
-@keyframes slideDown {
-  from {
-    transform: translateY(-10px);
-    opacity: 0;
+.text-h5 {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.text-body {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.text-caption {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #737373;
+}
+
+/* Layout utilities */
+.container-custom {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
-  to {
-    transform: translateY(0);
-    opacity: 1;
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.section-padding {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
   }
 }
 
-.animate-slideDown {
-  animation: slideDown 0.4s ease-out;
+/* Card styles */
+.card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-in-out;
+.card-hover {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: box-shadow 0.2s;
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+.card-hover:hover {
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
-/* ---------------------------------------------------
-   🌟 Special Touches
-   --------------------------------------------------- */
-
-/* Verified Badge */
-.badge-verified {
-  @apply bg-white/90 text-[#4F46E5] text-xs font-semibold px-3 py-1 rounded-full shadow flex items-center gap-1;
+.card-bordered {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e5e5;
+  padding: 1.5rem;
 }
 
-/* Emoji Banner */
-.emoji-banner {
-  @apply text-6xl flex justify-center items-center bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white;
+/* Button base */
+.btn-base {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
 }
 
-/* Glow on hover (used on links/buttons) */
-.hover-glow:hover {
-  filter: drop-shadow(0 0 0.5rem #764ba2aa);
+.btn-primary {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0ea5e9;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
-/* Section Title */
-.section-title {
-  @apply text-4xl font-bold text-center text-[#333] mb-12;
+.btn-primary:hover {
+  background-color: #0284c7;
+}
+
+.btn-primary:active {
+  background-color: #0369a1;
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  color: #171717;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e5e5;
+}
+
+.btn-outline {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #0ea5e9;
+  color: #0ea5e9;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background-color: #f0f9ff;
+}
+
+.btn-ghost {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #404040;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-danger {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+/* Form styles */
+.input-base {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  border: 1px solid #d4d4d4;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.input-base:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #0ea5e9;
+  border-color: transparent;
+}
+
+.input-error {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  border: 1px solid #ef4444;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.input-error:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #ef4444;
+  border-color: transparent;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #404040;
+  margin-bottom: 0.375rem;
+}
+
+.error-text {
+  font-size: 0.875rem;
+  color: #ef4444;
+  margin-top: 0.25rem;
+}
+
+/* Badge styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.badge-warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-neutral {
+  background-color: #f5f5f5;
+  color: #171717;
+}
+
+.badge-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge-confirmed {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.badge-cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-completed {
+  background-color: #dbeafe;
+  color: #1e40af;
 }

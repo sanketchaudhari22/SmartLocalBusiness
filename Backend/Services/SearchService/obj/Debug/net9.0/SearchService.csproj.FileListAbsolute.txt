@@ -522,3 +522,4 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\SearchService\obj\De
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\SearchService\obj\Debug\net9.0\SearchService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\SearchService\obj\Debug\net9.0\SearchService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\SearchService\obj\Debug\net9.0\ref\SearchService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\SearchService\bin\Debug\net9.0\appsettings.Docker.json

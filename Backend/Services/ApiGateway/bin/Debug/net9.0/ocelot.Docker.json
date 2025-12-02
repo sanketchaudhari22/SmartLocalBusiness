@@ -1,0 +1,94 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "userservice", "Port": 5000 }],
+      "UpstreamPathTemplate": "/user/api/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "businessservice", "Port": 5001 }],
+      "UpstreamPathTemplate": "/business/api/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "bookingservice", "Port": 5002 }],
+      "UpstreamPathTemplate": "/booking/api/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "searchservice", "Port": 5003 }],
+      "UpstreamPathTemplate": "/search/api/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "reviewservice", "Port": 5004 }],
+      "UpstreamPathTemplate": "/review/api/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "user",
+      "Config": [
+        {
+          "Name": "User Service",
+          "Version": "v1",
+          "Url": "http://userservice:5000/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "business",
+      "Config": [
+        {
+          "Name": "Business Service",
+          "Version": "v1",
+          "Url": "http://businessservice:5001/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "booking",
+      "Config": [
+        {
+          "Name": "Booking Service",
+          "Version": "v1",
+          "Url": "http://bookingservice:5002/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "search",
+      "Config": [
+        {
+          "Name": "Search Service",
+          "Version": "v1",
+          "Url": "http://searchservice:5003/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "review",
+      "Config": [
+        {
+          "Name": "Review Service",
+          "Version": "v1",
+          "Url": "http://reviewservice:5004/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://apigateway:5005"
+  }
+}

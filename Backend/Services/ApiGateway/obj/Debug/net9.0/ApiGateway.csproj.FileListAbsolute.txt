@@ -158,3 +158,4 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ApiGateway\obj\Debug
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ApiGateway\obj\Debug\net9.0\ApiGateway.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ApiGateway\obj\Debug\net9.0\ref\ApiGateway.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\ApiGateway\bin\Debug\net9.0\ocelot.Docker.json

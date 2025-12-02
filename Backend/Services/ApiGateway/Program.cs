@@ -7,7 +7,12 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // ---------------- CONFIG ----------------
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+// Load ocelot.json or ocelot.Docker.json based on environment
+var ocelotConfigFile = builder.Environment.EnvironmentName == "Docker"
+    ? "ocelot.Docker.json"
+    : "ocelot.json";
+
+builder.Configuration.AddJsonFile(ocelotConfigFile, optional: false, reloadOnChange: true);
 
 // ---------------- SWAGGER + CONTROLLERS ----------------
 builder.Services.AddControllers();
@@ -33,7 +38,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp", policy =>
     {
         policy
-            .WithOrigins("http://localhost:5173")  // React frontend
+            .WithOrigins(
+                "http://localhost:5173",      // React dev server
+                "http://localhost",           // Frontend in Docker
+                "http://localhost:80",        // Frontend in Docker (explicit port)
+                "http://frontend"             // Docker container name
+            )
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();

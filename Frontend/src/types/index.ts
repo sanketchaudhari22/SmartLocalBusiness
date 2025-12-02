@@ -1,79 +1,56 @@
-export interface User {
-  userId: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  userType: string;
-}
+// Export individual DTOs
+export * from './api.types';
+export * from './booking.types';
+export * from './business.types';
+export * from './category.types';
+export * from './review.types';
+export * from './service.types';
+export * from './search.types';
+export * from './user.types';
 
-export interface Business {
-  businessId: number;
-  userId: number;
-  categoryId: number;
-  businessName: string;
-  description: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  latitude: number;
-  longitude: number;
-  phoneNumber: string;
-  email: string;
-  website: string;
-  rating: number;
-  totalReviews: number;
-  isVerified: boolean;
-  isActive: boolean;
-  categoryName: string;
-  createdAt: string;
-  updatedAt: string;
-    imageUrl?: string;
-}
+// Backward compatibility aliases (old UI code support)
+export type Business = import('./business.types').BusinessDto;
+export type Service = import('./service.types').ServiceDto;
+export type Review = import('./review.types').ReviewDto;
+export type Booking = import('./booking.types').BookingDto;
 
-export interface Booking {
-  bookingId: number;
-  userId: number;
-  businessId: number;
-  serviceId: number;
-  bookingDate: string;
-  status: string;
-  totalAmount: number;
-  notes?: string;
-}
+// Explicit exports for stores (very important)
+export { 
+  BookingStatus,
+  type CreateBookingDto,
+  type BookingDto,
+  type UpdateStatusRequest
+} from './booking.types';
 
-export interface Review {
-  reviewId: number;
-  businessId: number;
-  userId: number;
-  rating: number;
-  reviewText?: string;
-  createdAt: string;
+export {
+  type CreateBusinessDto,
+  type BusinessDto
+} from './business.types';
 
-  
-}
+export {
+  type CreateCategoryDto,
+  type CategoryDto
+} from './category.types';
 
-export interface SearchRequest {
-  searchTerm?: string;
-  city?: string;
-  categoryId?: number;
-  latitude?: number;
-  longitude?: number;
-  radiusInKm?: number;
-  pageNumber: number;
-  pageSize: number;
-}
-export interface Service {
-  serviceId: number;
-  serviceName: string;
-  description?: string;
-  price: number;
-  businessId: number;
-}
+export {
+  type ReviewDto,
+  type AverageRatingResponse
+} from './review.types';
 
-export interface ApiResponse<T> {
-  success: boolean;
-  message?: string;
-  data: T;
-}
+export {
+  type ServiceDto,
+  type CreateServiceDto,
+  type UpdateServiceDto
+} from './service.types';
+
+export {
+  type SearchRequest,
+  type PagedResult
+} from './search.types';
+
+export {
+  type UserDto,
+  type RegisterUserDto,
+  type LoginDto,
+  type LoginResponse
+} from './user.types';

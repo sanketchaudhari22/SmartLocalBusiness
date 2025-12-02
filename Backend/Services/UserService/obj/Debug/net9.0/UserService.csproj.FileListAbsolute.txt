@@ -205,3 +205,4 @@ C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debu
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\UserService.pdb
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\UserService.genruntimeconfig.cache
 C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\obj\Debug\net9.0\ref\UserService.dll
+C:\Users\SANKET\Desktop\SmartLocalBusiness\Backend\Services\UserService\bin\Debug\net9.0\appsettings.Docker.json
