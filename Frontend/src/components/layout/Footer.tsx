@@ -1,48 +1,87 @@
-import { Link } from 'react-router-dom';
-import { Building2, Mail, Phone, MapPin } from 'lucide-react';
+'use client';
 
-export const Footer = () => {
+import Link from 'next/link';
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+
+export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-neutral-900 text-neutral-300">
-      <div className="container-custom py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
+    <footer className="bg-slate-900 text-white">
+      {/* Main Footer */}
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-                <Building2 className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-h4 text-white">LocalBiz</span>
-            </div>
-            <p className="text-sm text-neutral-400">
-              Discover and book local services with ease. Connect with trusted businesses in your area.
+            <h3 className="font-bold text-xl mb-4 text-white">Smart Local Business</h3>
+            <p className="text-slate-400 text-sm mb-6 leading-relaxed">
+              Your trusted platform for discovering and booking local services.
+              Connect with verified businesses in your area.
             </p>
+            <div className="flex gap-4">
+              <a
+                href="#"
+                className="h-10 w-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
+                className="h-10 w-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
+                className="h-10 w-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
+                className="h-10 w-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* For Customers */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+            <h4 className="font-semibold text-lg mb-4 text-white">For Customers</h4>
+            <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/businesses" className="text-sm hover:text-primary-400 transition-colors">
-                  Browse Businesses
+                <Link href="/search" className="text-slate-400 hover:text-white transition-colors">
+                  Browse Services
                 </Link>
               </li>
               <li>
-                <Link to="/search" className="text-sm hover:text-primary-400 transition-colors">
-                  Search
+                <Link
+                  href="/how-it-works"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  How It Works
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-sm hover:text-primary-400 transition-colors">
-                  About Us
+                <Link
+                  href="/dashboard"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  My Bookings
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-sm hover:text-primary-400 transition-colors">
-                  Contact
+                <Link href="/help" className="text-slate-400 hover:text-white transition-colors">
+                  Help Center
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/categories"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  All Categories
                 </Link>
               </li>
             </ul>
@@ -50,25 +89,42 @@ export const Footer = () => {
 
           {/* For Business */}
           <div>
-            <h3 className="text-white font-semibold mb-4">For Business</h3>
-            <ul className="space-y-2">
+            <h4 className="font-semibold text-lg mb-4 text-white">For Business</h4>
+            <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/businesses/create" className="text-sm hover:text-primary-400 transition-colors">
+                <Link
+                  href="/for-business"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
                   List Your Business
                 </Link>
               </li>
               <li>
-                <Link to="/my-businesses" className="text-sm hover:text-primary-400 transition-colors">
-                  Manage Business
+                <Link
+                  href="/business/dashboard"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  Business Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/pricing" className="text-sm hover:text-primary-400 transition-colors">
+                <Link href="/pricing" className="text-slate-400 hover:text-white transition-colors">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/resources" className="text-sm hover:text-primary-400 transition-colors">
+                <Link
+                  href="/success-stories"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  Success Stories
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/business/resources"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
                   Resources
                 </Link>
               </li>
@@ -77,42 +133,77 @@ export const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center space-x-2 text-sm">
-                <Mail className="w-4 h-4 text-primary-400" />
-                <a href="mailto:info@localbiz.com" className="hover:text-primary-400 transition-colors">
-                  info@localbiz.com
+            <h4 className="font-semibold text-lg mb-4 text-white">Contact Us</h4>
+            <ul className="space-y-4 text-sm">
+              <li className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-primary mt-0.5" />
+                <span className="text-slate-400">
+                  123 Business Avenue
+                  <br />
+                  New York, NY 10001
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="h-5 w-5 text-primary" />
+                <a
+                  href="tel:+1234567890"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  +1 (234) 567-890
                 </a>
               </li>
-              <li className="flex items-center space-x-2 text-sm">
-                <Phone className="w-4 h-4 text-primary-400" />
-                <a href="tel:+1234567890" className="hover:text-primary-400 transition-colors">
-                  (123) 456-7890
+              <li className="flex items-center gap-3">
+                <Mail className="h-5 w-5 text-primary" />
+                <a
+                  href="mailto:support@smartlocalbusiness.com"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  support@smartlocalbusiness.com
                 </a>
-              </li>
-              <li className="flex items-start space-x-2 text-sm">
-                <MapPin className="w-4 h-4 text-primary-400 mt-0.5" />
-                <span>123 Business St, Suite 100<br />City, State 12345</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-neutral-800 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-neutral-400">
-              © {currentYear} LocalBiz. All rights reserved.
+        {/* Newsletter */}
+        <div className="border-t border-slate-800 pt-8 pb-8">
+          <div className="max-w-xl mx-auto text-center">
+            <h4 className="font-semibold text-lg mb-2">Subscribe to Our Newsletter</h4>
+            <p className="text-slate-400 text-sm mb-4">
+              Get the latest updates, deals, and business tips delivered to your inbox.
             </p>
-            <div className="flex space-x-6">
-              <Link to="/privacy" className="text-sm text-neutral-400 hover:text-primary-400 transition-colors">
+            <form className="flex gap-2 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button
+                type="submit"
+                className="px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-slate-800">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-slate-400">
+              &copy; {currentYear} Smart Local Business. All rights reserved.
+            </p>
+            <div className="flex gap-6 text-sm">
+              <Link href="/privacy" className="text-slate-400 hover:text-white transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-sm text-neutral-400 hover:text-primary-400 transition-colors">
+              <Link href="/terms" className="text-slate-400 hover:text-white transition-colors">
                 Terms of Service
               </Link>
-              <Link to="/cookies" className="text-sm text-neutral-400 hover:text-primary-400 transition-colors">
+              <Link href="/cookies" className="text-slate-400 hover:text-white transition-colors">
                 Cookie Policy
               </Link>
             </div>
@@ -121,4 +212,4 @@ export const Footer = () => {
       </div>
     </footer>
   );
-};
+}

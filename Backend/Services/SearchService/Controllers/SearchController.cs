@@ -16,6 +16,21 @@ namespace SearchService.Controllers
             _searchService = searchService;
         }
 
+        // ✅ Simple GET Search (for easy testing)
+        [HttpGet]
+        public async Task<IActionResult> SearchByQuery([FromQuery] string query = "", [FromQuery] int? categoryId = null, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var request = new SearchRequest
+            {
+                SearchTerm = query,
+                CategoryId = categoryId,
+                PageNumber = page,
+                PageSize = pageSize
+            };
+            var results = await _searchService.SearchBusinessesAsync(request);
+            return Ok(ApiResponse<PagedResult<BusinessDto>>.SuccessResponse(results));
+        }
+
         // ✅ Standard Search
         [HttpPost("search")]
         public async Task<IActionResult> Search([FromBody] SearchRequest request)

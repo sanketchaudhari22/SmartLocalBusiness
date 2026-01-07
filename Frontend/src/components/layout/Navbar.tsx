@@ -1,120 +1,126 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@/store';
-import { LogOut, User, LayoutDashboard, Building2 } from 'lucide-react';
+'use client';
 
-export const Navbar = () => {
-  const { user, isAuthenticated, logout } = useAuthStore();
-  const navigate = useNavigate();
+import Link from 'next/link';
+import { useAuth } from '@/lib/hooks';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { getInitials } from '@/lib/utils';
+import { User, LogOut, LayoutDashboard, Settings, Heart, Calendar } from 'lucide-react';
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+export function Navbar() {
+  const { user, isAuthenticated, logout } = useAuth();
+
+  const getDashboardLink = () => {
+    if (!user) return '/';
+
+    switch (user.userType) {
+      case 'Admin':
+        return '/admin/dashboard';
+      case 'BusinessOwner':
+        return '/business/dashboard';
+      default:
+        return '/dashboard';
+    }
   };
 
   return (
-    <nav className="bg-white border-b border-neutral-200 sticky top-0 z-50">
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-              <Building2 className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-h4 text-neutral-900">LocalBiz</span>
+    <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <Link href="/" className="text-2xl font-bold text-primary">
+          Smart Local Business
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-6">
+          <Link href="/search" className="text-sm font-medium hover:text-primary transition-colors">
+            Browse
           </Link>
+          <Link href="/how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
+            How It Works
+          </Link>
+          <Link href="/for-business" className="text-sm font-medium hover:text-primary transition-colors">
+            For Business
+          </Link>
+        </nav>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link
-              to="/businesses"
-              className="text-neutral-700 hover:text-primary-500 font-medium transition"
-            >
-              Businesses
-            </Link>
-            <Link
-              to="/search"
-              className="text-neutral-700 hover:text-primary-500 font-medium transition"
-            >
-              Search
-            </Link>
-            {isAuthenticated && user?.userType === 'Owner' && (
-              <Link
-                to="/my-businesses"
-                className="text-neutral-700 hover:text-primary-500 font-medium transition"
-              >
-                My Businesses
-              </Link>
-            )}
-          </div>
-
-          {/* User Menu */}
-          <div className="flex items-center space-x-4">
-            {isAuthenticated ? (
-              <>
-                <Link to="/dashboard" className="btn-ghost">
-                  <LayoutDashboard className="w-4 h-4 mr-2" />
-                  Dashboard
-                </Link>
-                <div className="relative group">
-                  <button className="flex items-center space-x-2 btn-ghost">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm font-medium">
-                      {user?.firstName || 'User'}
-                    </span>
-                  </button>
-                  {/* Dropdown */}
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-neutral-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                    <Link
-                      to="/profile"
-                      className="block px-4 py-2 hover:bg-neutral-50 rounded-t-lg"
-                    >
-                      Profile
-                    </Link>
-                    <Link
-                      to="/my-bookings"
-                      className="block px-4 py-2 hover:bg-neutral-50"
-                    >
-                      My Bookings
-                    </Link>
-                    {user?.userType === 'Owner' && (
-                      <>
-                        <Link
-                          to="/my-businesses"
-                          className="block px-4 py-2 hover:bg-neutral-50"
-                        >
-                          My Businesses
-                        </Link>
-                        <Link
-                          to="/businesses/create"
-                          className="block px-4 py-2 hover:bg-neutral-50"
-                        >
-                          Create Business
-                        </Link>
-                      </>
-                    )}
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-error hover:bg-neutral-50 rounded-b-lg flex items-center"
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Logout
-                    </button>
+        <div className="flex items-center gap-3">
+          {isAuthenticated && user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Avatar>
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {getInitials(`${user.firstName} ${user.lastName}`)}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      {user.firstName} {user.lastName}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                   </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="btn-ghost">
-                  Login
-                </Link>
-                <Link to="/register" className="btn-primary">
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href={getDashboardLink()} className="cursor-pointer">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/profile" className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/bookings" className="cursor-pointer">
+                    <Calendar className="mr-2 h-4 w-4" />
+                    <span>My Bookings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/favorites" className="cursor-pointer">
+                    <Heart className="mr-2 h-4 w-4" />
+                    <span>Favorites</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/profile" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={logout} className="cursor-pointer text-destructive">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/register">Sign Up</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
-    </nav>
+    </header>
   );
-};
+}

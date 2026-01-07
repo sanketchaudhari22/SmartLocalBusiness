@@ -277,7 +277,7 @@ namespace BusinessService.Controllers
                         c.Description,
                         c.IconUrl,
                         c.IsActive,
-                        BusinessCount = c.Businesses.Count(b => b.IsVerified)
+                        BusinessCount = c.Businesses.Count(b => b.IsVerified == true)
                     })
                     .FirstOrDefaultAsync();
 

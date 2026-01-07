@@ -1,8 +1,21 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm create:*)",
-      "Bash(npm install:*)"
+      "Bash(test:*)",
+      "Bash(npm install)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet run)",
+      "Bash(timeout 10 bash:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(timeout 5 bash -c 'curl -s http://localhost:5001 && curl -s http://localhost:5002')",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(Get-Process -Name \"dotnet\" -ErrorAction SilentlyContinue)",
+      "Bash(Stop-Process -Force)",
+      "Bash(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
+      "Bash(Start-Sleep -Seconds 2)",
+      "Bash(Write-Host \"Waiting for processes to terminate...\" -ForegroundColor Yellow)"
     ],
     "deny": [],
     "ask": []

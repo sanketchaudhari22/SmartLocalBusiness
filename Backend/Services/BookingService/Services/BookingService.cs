@@ -3,6 +3,7 @@ using SmartLocalBusiness.BookingService.Interfaces;
 using SmartLocalBusiness.Domain.Entities;
 using SmartLocalBusiness.Infrastructure.Data;
 using SmartLocalBusiness.Shared.DTOs;
+using SmartLocalBusiness.Shared.Enums;
 
 namespace SmartLocalBusiness.BookingService.Services
 {
@@ -27,7 +28,7 @@ namespace SmartLocalBusiness.BookingService.Services
                 BusinessId = dto.BusinessId,
                 ServiceId = dto.ServiceId,
                 BookingDate = dto.BookingDate,
-                Status = "Pending",
+                Status = BookingStatus.Pending,
                 TotalAmount = service.Price,
                 Notes = dto.Notes,
                 CreatedAt = DateTime.UtcNow,
@@ -83,7 +84,7 @@ namespace SmartLocalBusiness.BookingService.Services
         {
             var now = DateTime.UtcNow;
             var upcoming = await _context.Bookings
-                .Where(b => b.UserId == userId && b.BookingDate > now && b.Status != "Cancelled")
+                .Where(b => b.UserId == userId && b.BookingDate > now && b.Status != BookingStatus.Cancelled)
                 .Include(b => b.Business)
                 .Include(b => b.Service)
                 .OrderBy(b => b.BookingDate)
@@ -107,13 +108,12 @@ namespace SmartLocalBusiness.BookingService.Services
         }
 
         // ✅ Update Status
-        public async Task<BookingDto> UpdateBookingStatusAsync(int bookingId, string status)
+        public async Task<BookingDto> UpdateBookingStatusAsync(int bookingId, BookingStatus status)
         {
             var booking = await _context.Bookings.FindAsync(bookingId)
                 ?? throw new Exception("Booking not found");
 
-            var validStatuses = new[] { "Pending", "Confirmed", "Completed", "Cancelled" };
-            if (!validStatuses.Contains(status))
+            if (!Enum.IsDefined(typeof(BookingStatus), status))
                 throw new Exception("Invalid status");
 
             booking.Status = status;
@@ -129,7 +129,7 @@ namespace SmartLocalBusiness.BookingService.Services
             var booking = await _context.Bookings.FindAsync(bookingId);
             if (booking == null) return false;
 
-            booking.Status = "Cancelled";
+            booking.Status = BookingStatus.Cancelled;
             booking.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
 

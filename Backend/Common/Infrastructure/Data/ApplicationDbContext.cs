@@ -43,7 +43,10 @@ namespace SmartLocalBusiness.Infrastructure.Data
             {
                 entity.HasKey(e => e.BusinessId);
                 entity.Property(e => e.BusinessName).HasMaxLength(255);
-                
+                entity.Property(e => e.Latitude).HasColumnType("decimal(10,7)");
+                entity.Property(e => e.Longitude).HasColumnType("decimal(10,7)");
+                entity.Property(e => e.Rating).HasColumnType("decimal(3,2)");
+
                 entity.HasOne(e => e.Category)
                     .WithMany(c => c.Businesses)
                     .HasForeignKey(e => e.CategoryId)
@@ -68,7 +71,9 @@ namespace SmartLocalBusiness.Infrastructure.Data
             {
                 entity.HasKey(e => e.BookingId);
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(10,2)");
-                entity.Property(e => e.Status).HasMaxLength(50);
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50)
+                    .HasConversion<string>();
 
                 entity.HasOne(e => e.User)
                     .WithMany()

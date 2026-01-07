@@ -39,7 +39,9 @@ builder.Services.AddCors(options =>
     {
         policy
             .WithOrigins(
-                "http://localhost:5173",      // React dev server
+                "http://localhost:3000",      // React dev server (Vite)
+                "http://localhost:3001",      // React dev server (Vite alternate)
+                "http://localhost:5173",      // React dev server (alternate)
                 "http://localhost",           // Frontend in Docker
                 "http://localhost:80",        // Frontend in Docker (explicit port)
                 "http://frontend"             // Docker container name

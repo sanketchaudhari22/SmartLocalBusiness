@@ -1,4 +1,4 @@
-using SmartLocalBusiness.Domain.Enums;
+using SmartLocalBusiness.Shared.Enums;
 
 namespace SmartLocalBusiness.Shared.DTOs
 {

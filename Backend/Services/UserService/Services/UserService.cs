@@ -23,12 +23,12 @@ namespace SmartLocalBusiness.UserService.Services
             _logger = logger;
         }
 
-        public async Task<string> LoginAsync(LoginDto dto)
+        public async Task<object> LoginAsync(LoginDto dto)
         {
             try
             {
                 _logger.LogInformation("🔍 Looking up user by email: {Email}", dto.Email);
-                
+
                 var user = await _context.Users
                     .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
@@ -47,8 +47,21 @@ namespace SmartLocalBusiness.UserService.Services
 
                 _logger.LogInformation("✅ User authenticated, generating token: {Email}", dto.Email);
                 var token = _jwtService.GenerateToken(user);
-                
-                return token;
+
+                // Return both token and user data for frontend
+                return new
+                {
+                    token = token,
+                    user = new UserDto
+                    {
+                        UserId = user.UserId,
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        PhoneNumber = user.PhoneNumber,
+                        UserType = user.UserType
+                    }
+                };
             }
             catch (Exception ex)
             {
